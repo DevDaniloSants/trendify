@@ -21,7 +21,9 @@ export default function RootLayout({
         <html lang="pt-Br">
             <body className={`${mulish.className} antialiased`}>
                 <Navbar />
-                <main className="mt-20"> {children}</main>
+                <main className="mt-30 flex h-full w-dvw justify-center">
+                    {children}
+                </main>
             </body>
         </html>
     );
