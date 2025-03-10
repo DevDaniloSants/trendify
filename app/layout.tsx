@@ -1,24 +1,28 @@
-import type { Metadata } from "next";
-import { Mulish } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Mulish } from 'next/font/google';
+import './globals.css';
+import Navbar from './_components/navbar';
 
 const mulish = Mulish({
-  subsets: ["latin-ext"],
+    subsets: ['latin-ext'],
 });
 
 export const metadata: Metadata = {
-  title: "Trendify",
-  description: "O e-commerce número 1 do Brasil",
+    title: 'Trendify',
+    description: 'O e-commerce número 1 do Brasil',
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="pt-Br">
-      <body className={`${mulish.className}  antialiased`}>{children}</body>
-    </html>
-  );
+    return (
+        <html lang="pt-Br">
+            <body className={`${mulish.className} antialiased`}>
+                <Navbar />
+                <main className="mt-20"> {children}</main>
+            </body>
+        </html>
+    );
 }
