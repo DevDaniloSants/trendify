@@ -33,7 +33,10 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex items-center">
-                        <NavbarCustomButton icon={<UserRound />} />
+                        <NavbarCustomButton
+                            icon={<UserRound />}
+                            href="/sign-in"
+                        />
 
                         <NavbarCustomButton icon={<Heart />} />
 
