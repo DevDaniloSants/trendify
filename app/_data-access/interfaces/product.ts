@@ -8,3 +8,11 @@ export interface Product {
     category: Category;
     images: string[];
 }
+
+export interface GetProducDTO
+    extends Omit<Product, 'category' | 'price' | 'images'> {
+    image: string;
+    price: string;
+    discountPercentage?: number;
+    discountedPrice?: string;
+}
