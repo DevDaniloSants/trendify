@@ -37,7 +37,7 @@ export const SectionDescription = ({
     return (
         <p
             className={cn(
-                'text-primary text-xl sm:text-2xl md:text-3xl lg:text-4xl',
+                'text-primary text-base sm:text-2xl md:text-3xl lg:text-4xl',
                 className
             )}
         >
