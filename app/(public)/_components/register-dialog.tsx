@@ -7,6 +7,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/app/_components/ui/dialog';
+import FormRegister from './form-register';
 
 const RegisterDialog = () => {
     return (
@@ -21,13 +22,15 @@ const RegisterDialog = () => {
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                    <DialogTitle>Cadastre-se na Trendify</DialogTitle>
                     <DialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
+                        Aproveite nossas promoções exclusivas e descontos,
+                        sempre com os melhores preços.
                     </DialogDescription>
                 </DialogHeader>
+                <div>
+                    <FormRegister />
+                </div>
             </DialogContent>
         </Dialog>
     );
