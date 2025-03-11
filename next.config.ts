@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
             {
                 hostname: 'i.imgur.com',
             },
+            {
+                hostname: 'img-cdn.tnwcdn.com',
+            },
         ],
     },
 };

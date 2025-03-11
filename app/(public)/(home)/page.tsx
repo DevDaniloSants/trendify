@@ -1,15 +1,14 @@
-import Container from '../_components/container';
+import ProductCarousel from '@/app/_components/product-carousel';
+import ProductCarouselItem from '@/app/_components/product-carousel-item';
 import {
-    SectionDescription,
     SectionHeader,
     SectionTitle,
-} from '../_components/section-header';
-import { getProductsWithDiscount } from '../_data-access/product/get-products-with-discount';
-
-import BannerCarousel from './_components/banner-carousel';
-import ProductCarousel from '../_components/product-carousel';
-import ProductCarouselItem from '../_components/product-carousel-item';
-import { getTopSellingProducts } from '../_data-access/product/get-top-selling-products';
+    SectionDescription,
+} from '@/app/_components/section-header';
+import { getProductsWithDiscount } from '@/app/_data-access/product/get-products-with-discount';
+import { getTopSellingProducts } from '@/app/_data-access/product/get-top-selling-products';
+import { Container } from 'lucide-react';
+import BannerCarousel from '../_components/banner-carousel';
 
 const Home = async () => {
     const productsWithDiscount = await getProductsWithDiscount();
