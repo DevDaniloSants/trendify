@@ -11,7 +11,7 @@ import SidebarButton from './sidebar-button';
 const Navbar = () => {
     return (
         <Sheet>
-            <header className="border-border fixed top-0 left-0 w-full border-b">
+            <header className="border-border fixed top-0 left-0 z-50 w-full border-b bg-white">
                 <nav className="mx-auto flex h-full w-full max-w-[1400px] items-center justify-between px-4 py-5 text-sm">
                     <Link href="/" className="text-2xl font-extrabold">
                         Trendify
