@@ -13,7 +13,7 @@ export interface ProductItemProps {
 
 const ProductItem = (product: ProductItemProps) => {
     return (
-        <div key={product.id} className="h-[350px] min-w-[270px]">
+        <div key={product.id} className="h-[350px] w-full">
             <div className="group bg-border relative h-[250px] w-full overflow-hidden">
                 <Image
                     src={product.image}
