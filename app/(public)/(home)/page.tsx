@@ -1,3 +1,6 @@
+import { getProductsWithDiscount } from '@/app/_data-access/product/get-products-with-discount';
+import { getTopSellingProducts } from '@/app/_data-access/product/get-top-selling-products';
+
 import ProductCarousel from '@/app/_components/product-carousel';
 import ProductCarouselItem from '@/app/_components/product-carousel-item';
 import {
@@ -5,10 +8,8 @@ import {
     SectionTitle,
     SectionDescription,
 } from '@/app/_components/section-header';
-import { getProductsWithDiscount } from '@/app/_data-access/product/get-products-with-discount';
-import { getTopSellingProducts } from '@/app/_data-access/product/get-top-selling-products';
-import { Container } from 'lucide-react';
 import BannerCarousel from '../_components/banner-carousel';
+import Container from '@/app/_components/container';
 
 const Home = async () => {
     const productsWithDiscount = await getProductsWithDiscount();
