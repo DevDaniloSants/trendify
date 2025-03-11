@@ -7,7 +7,8 @@ import {
 import { getProductsWithDiscount } from '../_data-access/get-products-with-discount';
 
 import BannerCarousel from './_components/banner-carousel';
-import ProductItem from '../_components/product-item';
+import ProductCarousel from '../_components/product-carousel';
+import ProductCarouselItem from '../_components/product-carousel-item';
 
 const Home = async () => {
     const productsWithDiscount = await getProductsWithDiscount();
@@ -16,7 +17,7 @@ const Home = async () => {
         <Container className="mb-4 space-y-10 px-2 md:space-y-[80px]">
             <BannerCarousel />
 
-            <div className="space-y-8">
+            <div className="relative space-y-6 md:space-y-12">
                 <SectionHeader>
                     <SectionTitle>Oferta Relâmpago</SectionTitle>
                     <SectionDescription>
@@ -24,11 +25,14 @@ const Home = async () => {
                     </SectionDescription>
                 </SectionHeader>
 
-                <div className="flex gap-2">
+                <ProductCarousel>
                     {productsWithDiscount.map((product) => (
-                        <ProductItem key={product.id} {...product} />
+                        <ProductCarouselItem
+                            key={product.id}
+                            product={product}
+                        />
                     ))}
-                </div>
+                </ProductCarousel>
             </div>
         </Container>
     );

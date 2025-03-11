@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Heart } from 'lucide-react';
 import { Button } from './ui/button';
 
-interface ProductItemProps {
+export interface ProductItemProps {
     id: number;
     title: string;
     price: string;
