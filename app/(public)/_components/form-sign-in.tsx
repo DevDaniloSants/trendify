@@ -16,8 +16,14 @@ import { z } from 'zod';
 
 import { CustomInputForm } from './custom-input-form';
 import { authenticateUser } from '@/app/_actions/user/authenticate-user';
+import { useUser } from '@/app/_hooks/useUser';
+
+import { useRouter } from 'next/navigation';
 
 const FormSignIn = () => {
+    const router = useRouter();
+    const { setProfileUser } = useUser();
+
     const form = useForm<z.infer<typeof signInSchema>>({
         resolver: zodResolver(signInSchema),
         defaultValues: {
@@ -27,7 +33,17 @@ const FormSignIn = () => {
     });
 
     async function onSubmit(values: z.infer<typeof signInSchema>) {
-        await authenticateUser(values);
+        try {
+            const { data: user } = await authenticateUser(values);
+
+            await setProfileUser(user);
+
+            if (user) {
+                router.push('/');
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

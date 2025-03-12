@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Heart, ShoppingCart, UserRound } from 'lucide-react';
 import { Sheet } from './ui/sheet';
@@ -7,8 +9,11 @@ import { NAVBAR_ITEMS } from '../_constants/navbar-items';
 import NavbarCustomButton from './navbar-custom-button';
 import Sidebar from './sidebar';
 import SidebarButton from './sidebar-button';
+import { useUser } from '../_hooks/useUser';
 
 const Navbar = () => {
+    const { user } = useUser();
+
     return (
         <Sheet>
             <header className="border-border fixed top-0 left-0 z-50 w-full border-b bg-white">
@@ -33,11 +38,14 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex items-center">
-                        <NavbarCustomButton
-                            icon={<UserRound />}
-                            href="/sign-in"
-                        />
-
+                        {user ? (
+                            <p>{user.name}</p>
+                        ) : (
+                            <NavbarCustomButton
+                                icon={<UserRound />}
+                                href="/sign-in"
+                            />
+                        )}
                         <NavbarCustomButton icon={<Heart />} />
 
                         <NavbarCustomButton icon={<ShoppingCart />} />
