@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { CustomInputForm } from './custom-input-form';
+import { createUser } from '@/app/_actions/user/create-user';
 
 const FormRegister = () => {
     const form = useForm<z.infer<typeof registerSchema>>({
@@ -24,8 +25,8 @@ const FormRegister = () => {
         },
     });
 
-    function onSubmit(values: z.infer<typeof registerSchema>) {
-        console.log(values);
+    async function onSubmit(values: z.infer<typeof registerSchema>) {
+        await createUser(values);
     }
 
     return (
@@ -87,7 +88,7 @@ const FormRegister = () => {
                             <FormControl>
                                 <CustomInputForm
                                     {...field}
-                                    type="confirmPassword"
+                                    type="password"
                                     placeholder="Digite sua senha novamente"
                                 />
                             </FormControl>
@@ -101,7 +102,11 @@ const FormRegister = () => {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <CustomInputForm {...field} type="file" />
+                                <CustomInputForm
+                                    {...field}
+                                    type="text"
+                                    placeholder="Insira uma url"
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
