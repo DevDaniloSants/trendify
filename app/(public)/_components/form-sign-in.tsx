@@ -15,6 +15,7 @@ import { signInSchema } from '@/app/_schemas/auth-schema';
 import { z } from 'zod';
 
 import { CustomInputForm } from './custom-input-form';
+import { authenticateUser } from '@/app/_actions/user/authenticate-user';
 
 const FormSignIn = () => {
     const form = useForm<z.infer<typeof signInSchema>>({
@@ -25,8 +26,8 @@ const FormSignIn = () => {
         },
     });
 
-    function onSubmit(values: z.infer<typeof signInSchema>) {
-        console.log(values);
+    async function onSubmit(values: z.infer<typeof signInSchema>) {
+        await authenticateUser(values);
     }
 
     return (
