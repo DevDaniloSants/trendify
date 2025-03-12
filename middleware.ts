@@ -9,6 +9,10 @@ const publicRoutes = [
         path: '/sign-in',
         whenAuthenticated: 'redirect',
     },
+    {
+        path: '/product',
+        whenAuthenticated: 'next',
+    },
 ] as const;
 
 const REDIRECT_WHEN_AUTHENTICATED = '/sign-in';
@@ -16,7 +20,12 @@ const REDIRECT_WHEN_AUTHENTICATED = '/sign-in';
 export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
-    const publicRoute = publicRoutes.find((route) => route.path === path);
+    const publicRoute = publicRoutes.find((route) => {
+        if (path.startsWith('/product')) {
+            return path.startsWith(route.path);
+        }
+        return route.path === path;
+    });
     const authToken = request.cookies.get('access_token');
 
     if (!authToken && publicRoute) {
