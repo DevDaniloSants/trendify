@@ -1,32 +1,37 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+
 export const getUserProfile = async ({
     accessToken,
 }: {
     accessToken: string;
 }) => {
-    try {
-        if (!accessToken) {
-            throw new Error('Usuário não encontrado');
-        }
-
-        const response = await fetch(`${process.env.API_URL}/auth/profile`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error('Erro ao buscar perfil do usuário');
-        }
-
-        const user = await response.json();
-
-        return user;
-    } catch (error: unknown) {
-        console.error('Erro ao buscar perfil do usuário', error);
-
-        return null;
+    if (!accessToken) {
+        return {
+            status: 401,
+            success: false,
+            message: 'User token is required',
+        };
     }
+
+    const response = await fetch(`${process.env.API_URL}/auth/profile`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        return {
+            status: response.status,
+            success: false,
+            message: 'User not found',
+        };
+    }
+
+    const user = await response.json();
+    revalidatePath('/', 'layout');
+
+    return user;
 };

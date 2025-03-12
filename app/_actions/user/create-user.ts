@@ -14,17 +14,23 @@ export const createUser = async (data: User) => {
 
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.message || 'Erro ao criar usuário');
+            return {
+                status: errorData.status,
+                success: false,
+                message: 'Error creating user',
+            };
         }
 
         return {
+            status: response.status,
             success: true,
-            message: 'Usuário criado com sucesso!',
+            message: 'User created successfully!',
         };
     } catch (error: unknown) {
-        console.error('Erro ao criar usuário:', error);
+        console.error('Error creating user:', error);
 
         return {
+            status: 500,
             success: false,
             message: error instanceof Error ? error.message : 'Server error',
         };
