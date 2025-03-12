@@ -1,7 +1,8 @@
 'use server';
 
-import { AuthenticateUser } from '../interfaces/user';
 import { setAuthCookies } from '@/app/_helpers/set-auth-cookies';
+import { AuthenticateUser } from '../interfaces/user';
+import { getUserProfile } from '@/app/_data-access/user/get-user-profile';
 
 export const authenticateUser = async (data: AuthenticateUser) => {
     try {
@@ -20,20 +21,27 @@ export const authenticateUser = async (data: AuthenticateUser) => {
             );
         }
 
-        const { access_token, refresh_token } = await response.json();
+        const { access_token: accessToken, refresh_token: refreshToken } =
+            await response.json();
 
-        await setAuthCookies(access_token, refresh_token);
+        await setAuthCookies(accessToken, refreshToken);
+
+        const user = await getUserProfile({ accessToken });
 
         return {
             success: true,
-            message: 'Usuário autenticado com sucesso!',
+            message: 'Usuário autenticado com sucesso',
+            data: user,
         };
     } catch (error: unknown) {
-        console.error('Erro ao authenticar usuário', error);
+        console.error('Erro ao autenticar usuário', error);
 
         return {
             success: false,
-            message: error instanceof Error ? error.message : 'Server error',
+            message:
+                error instanceof Error
+                    ? error.message
+                    : 'Erro interno no servidor',
         };
     }
 };

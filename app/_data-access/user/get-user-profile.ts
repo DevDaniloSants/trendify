@@ -1,11 +1,11 @@
 'use server';
 
-import { getAccessToken } from '@/app/_helpers/get-access-token';
-
-export const getUserProfile = async () => {
+export const getUserProfile = async ({
+    accessToken,
+}: {
+    accessToken: string;
+}) => {
     try {
-        const accessToken = getAccessToken();
-
         if (!accessToken) {
             throw new Error('Usuário não encontrado');
         }
@@ -21,7 +21,9 @@ export const getUserProfile = async () => {
             throw new Error('Erro ao buscar perfil do usuário');
         }
 
-        return await response.json();
+        const user = await response.json();
+
+        return user;
     } catch (error: unknown) {
         console.error('Erro ao buscar perfil do usuário', error);
 
