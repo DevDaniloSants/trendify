@@ -11,8 +11,10 @@ import Sidebar from './sidebar';
 import SidebarButton from './sidebar-button';
 import { useUser } from '../_hooks/useUser';
 
+import UserDropDownButton from './user-drop-down-button';
+
 const Navbar = () => {
-    const { user } = useUser();
+    const { user, logout } = useUser();
 
     return (
         <Sheet>
@@ -39,7 +41,10 @@ const Navbar = () => {
 
                     <div className="flex items-center">
                         {user ? (
-                            <p>{user.name}</p>
+                            <UserDropDownButton
+                                user={user}
+                                handleLogoutClick={logout}
+                            />
                         ) : (
                             <NavbarCustomButton
                                 icon={<UserRound />}
