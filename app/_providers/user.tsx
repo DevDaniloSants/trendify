@@ -1,19 +1,22 @@
 'use client';
 import type React from 'react';
 
-import { createContext, useLayoutEffect, useState } from 'react';
+import { createContext, useCallback, useLayoutEffect, useState } from 'react';
 import type { UserProfile } from '../_data-access/interfaces/user';
+import { signOut } from '../_actions/user/auth/sign-out';
 
 interface IUserContext {
     user: UserProfile | null;
     isLoading: boolean;
     setProfileUser: (user: UserProfile) => void;
+    logout: () => Promise<void>;
 }
 
 export const UserContext = createContext<IUserContext>({
     user: null,
     isLoading: true,
     setProfileUser: () => {},
+    logout: async () => {},
 });
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
@@ -26,6 +29,14 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         setUser(user);
         sessionStorage.setItem('user', JSON.stringify(user));
     }
+
+    const logout = useCallback(async () => {
+        setUser(null);
+
+        localStorage.removeItem('user');
+
+        await signOut();
+    }, []);
 
     useLayoutEffect(() => {
         setIsMounted(true);
@@ -46,7 +57,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <UserContext.Provider value={{ user, isLoading, setProfileUser }}>
+        <UserContext.Provider
+            value={{ user, isLoading, setProfileUser, logout }}
+        >
             {children}
         </UserContext.Provider>
     );
