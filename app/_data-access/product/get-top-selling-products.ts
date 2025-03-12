@@ -16,11 +16,8 @@ export const getTopSellingProducts = async (): Promise<GetProducDTO[]> => {
 
     const products = data.map((product: Product): GetProducDTO => {
         return {
-            id: product.id,
-            title: product.title,
-            description: product.description,
+            ...product,
             price: formatCurrency(product.price),
-            image: product.images[0],
         };
     });
 

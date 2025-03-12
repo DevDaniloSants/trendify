@@ -18,11 +18,8 @@ export const getProductsWithDiscount = async (): Promise<GetProducDTO[]> => {
             applyDiscountToProduct(product);
 
         return {
-            id: product.id,
-            title: product.title,
-            description: product.description,
+            ...product,
             price: formatCurrency(product.price),
-            image: product.images[0],
             discountPercentage,
             discountedPrice,
         };
