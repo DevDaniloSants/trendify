@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/app/_components/ui/button';
 import {
     Dialog,
@@ -8,10 +10,16 @@ import {
     DialogTrigger,
 } from '@/app/_components/ui/dialog';
 import FormRegister from './form-register';
+import { useState } from 'react';
 
 const RegisterDialog = () => {
+    const [isOpen, setisOpen] = useState<boolean>(false);
+
+    const handleDialogToggle = () => {
+        setisOpen((prevState) => !prevState);
+    };
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={handleDialogToggle}>
             <DialogTrigger asChild>
                 <Button
                     variant="ghost"
@@ -29,7 +37,7 @@ const RegisterDialog = () => {
                     </DialogDescription>
                 </DialogHeader>
                 <div>
-                    <FormRegister />
+                    <FormRegister toggleRegisterDialog={handleDialogToggle} />
                 </div>
             </DialogContent>
         </Dialog>

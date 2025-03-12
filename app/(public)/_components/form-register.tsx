@@ -12,8 +12,13 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { CustomInputForm } from './custom-input-form';
 import { createUser } from '@/app/_actions/user/create-user';
+import { toast } from 'sonner';
 
-const FormRegister = () => {
+interface FormRegisterProps {
+    toggleRegisterDialog: () => void;
+}
+
+const FormRegister = ({ toggleRegisterDialog }: FormRegisterProps) => {
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -26,7 +31,15 @@ const FormRegister = () => {
     });
 
     async function onSubmit(values: z.infer<typeof registerSchema>) {
-        await createUser(values);
+        const { success } = await createUser(values);
+
+        if (!success) {
+            toast.error('Erro ao criar usuário');
+        }
+
+        form.reset();
+        toast.success('Usuário criado com sucesso!');
+        toggleRegisterDialog();
     }
 
     return (
@@ -116,7 +129,14 @@ const FormRegister = () => {
                     type="submit"
                     className="bg-destructive hover:bg-destructive/90 w-full cursor-pointer py-6 text-white"
                 >
-                    Cadastrar
+                    {form.formState.isSubmitting ? (
+                        <div className="flex items-center justify-center">
+                            <span className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></span>
+                            <span>Carregando...</span>
+                        </div>
+                    ) : (
+                        'Cadastrar'
+                    )}
                 </Button>
             </form>
         </Form>
