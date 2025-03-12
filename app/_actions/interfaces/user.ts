@@ -5,4 +5,4 @@ export interface User {
     avatar: string;
 }
 
-export type AuthenticateUser = Pick<User, 'password' | 'email'>;
+export type SignIn = Pick<User, 'password' | 'email'>;

@@ -1,10 +1,11 @@
 'use server';
 
 import { setAuthCookies } from '@/app/_helpers/set-auth-cookies';
-import { AuthenticateUser } from '../interfaces/user';
-import { getUserProfile } from '@/app/_data-access/user/get-user-profile';
 
-export const authenticateUser = async (data: AuthenticateUser) => {
+import { getUserProfile } from '@/app/_data-access/user/get-user-profile';
+import { SignIn } from '../../interfaces/user';
+
+export const signIn = async (data: SignIn) => {
     try {
         const response = await fetch(`${process.env.API_URL}/auth/login`, {
             method: 'POST',

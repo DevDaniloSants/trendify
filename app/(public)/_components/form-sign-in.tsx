@@ -15,7 +15,7 @@ import { signInSchema } from '@/app/_schemas/auth-schema';
 import { z } from 'zod';
 
 import { CustomInputForm } from './custom-input-form';
-import { authenticateUser } from '@/app/_actions/user/authenticate-user';
+import { signIn } from '@/app/_actions/user/auth/sign-in';
 import { useUser } from '@/app/_hooks/useUser';
 
 import { useRouter } from 'next/navigation';
@@ -34,7 +34,7 @@ const FormSignIn = () => {
 
     async function onSubmit(values: z.infer<typeof signInSchema>) {
         try {
-            const { data: user } = await authenticateUser(values);
+            const { data: user } = await signIn(values);
 
             await setProfileUser(user);
 
