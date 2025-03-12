@@ -33,7 +33,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     const logout = useCallback(async () => {
         setUser(null);
 
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
 
         await signOut();
     }, []);

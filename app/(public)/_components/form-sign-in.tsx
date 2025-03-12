@@ -19,6 +19,7 @@ import { signIn } from '@/app/_actions/user/auth/sign-in';
 import { useUser } from '@/app/_hooks/useUser';
 
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const FormSignIn = () => {
     const router = useRouter();
@@ -33,16 +34,22 @@ const FormSignIn = () => {
     });
 
     async function onSubmit(values: z.infer<typeof signInSchema>) {
-        try {
-            const { data: user } = await signIn(values);
+        const { data: user, success } = await signIn(values);
 
-            await setProfileUser(user);
+        if (!success) {
+            toast.error('Usuário ou senha inválidos', {
+                description: 'Tente novamente',
+            });
+            return;
+        }
 
-            if (user) {
-                router.push('/');
-            }
-        } catch (error) {
-            console.log(error);
+        form.reset();
+        toast.success('Login realizado com sucesso');
+
+        await setProfileUser(user);
+
+        if (user) {
+            router.push('/');
         }
     }
 
@@ -83,9 +90,17 @@ const FormSignIn = () => {
                 />
                 <Button
                     type="submit"
+                    disabled={form.formState.isSubmitting}
                     className="bg-destructive hover:bg-destructive/90 w-full cursor-pointer py-6 text-white"
                 >
-                    Entrar
+                    {form.formState.isSubmitting ? (
+                        <div className="flex items-center justify-center">
+                            <span className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></span>
+                            <span>Carregando...</span>
+                        </div>
+                    ) : (
+                        'Entrar'
+                    )}
                 </Button>
                 <div className="flex w-full items-center justify-end gap-2">
                     <p className="text-muted-foreground text-sm">
