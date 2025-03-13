@@ -48,6 +48,15 @@ const nextConfig: NextConfig = {
             {
                 hostname: 'placeimg.com',
             },
+            {
+                hostname: 'vietmartjp.com',
+            },
+            {
+                hostname: 'example.com',
+            },
+            {
+                hostname: 'encrypted-tbn0.gstatic.com',
+            },
         ],
     },
 };

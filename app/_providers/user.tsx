@@ -27,26 +27,24 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     async function setProfileUser(user: UserProfile) {
         if (!user) return;
         setUser(user);
-        sessionStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('@user', JSON.stringify(user));
     }
 
     const logout = useCallback(async () => {
         setUser(null);
-
-        sessionStorage.removeItem('user');
-
+        localStorage.removeItem('@user');
         await signOut();
     }, []);
 
     useLayoutEffect(() => {
         setIsMounted(true);
-        const storedUser = sessionStorage.getItem('user');
+        const storedUser = localStorage.getItem('@user');
         if (storedUser) {
             try {
                 setUser(JSON.parse(storedUser));
             } catch (error) {
                 console.error('Erro ao analisar dados do usuário:', error);
-                sessionStorage.removeItem('user');
+                localStorage.removeItem('@user');
             }
         }
         setIsLoading(false);
