@@ -57,6 +57,9 @@ const nextConfig: NextConfig = {
             {
                 hostname: 'encrypted-tbn0.gstatic.com',
             },
+            {
+                hostname: 'www.inkanta.com.co',
+            },
         ],
     },
 };
