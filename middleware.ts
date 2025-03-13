@@ -13,6 +13,14 @@ const publicRoutes = [
         path: '/product',
         whenAuthenticated: 'next',
     },
+    {
+        path: '/category',
+        whenAuthenticated: 'next',
+    },
+    {
+        path: '/about',
+        whenAuthenticated: 'next',
+    },
 ] as const;
 
 const REDIRECT_WHEN_AUTHENTICATED = '/sign-in';
@@ -20,8 +28,12 @@ const REDIRECT_WHEN_AUTHENTICATED = '/sign-in';
 export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
+    if (path.match(/\.(jpg|jpeg|png|gif|svg|webp|css|js|ico|json)$/i)) {
+        return NextResponse.next();
+    }
+
     const publicRoute = publicRoutes.find((route) => {
-        if (path.startsWith('/product')) {
+        if (path.startsWith('/product') || path.startsWith('/category')) {
             return path.startsWith(route.path);
         }
         return route.path === path;
@@ -58,7 +70,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config: MiddlewareConfig = {
-    matcher: [
-        '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
-    ],
+    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };

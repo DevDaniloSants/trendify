@@ -7,7 +7,7 @@ const SignIn = () => {
             <div className="flex h-full w-full justify-between">
                 <div className="relative hidden h-[780px] lg:block lg:w-full">
                     <Image
-                        src={'/sign-in-image.webp'}
+                        src={'/sign-in-image.png'}
                         fill
                         priority
                         alt="Imagem de sign In"
