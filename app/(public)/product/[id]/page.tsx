@@ -5,15 +5,9 @@ import Container from '@/app/_components/container';
 import GoBackButton from '@/app/_components/go-back-button';
 import ProductInfo from '../../_components/product-info';
 import { getProduct } from '@/app/_data-access/product/get-product';
-import {
-    SectionDescription,
-    SectionHeader,
-    SectionTitle,
-} from '@/app/_components/section-header';
-import ProductCarousel from '@/app/_components/product-carousel';
-import ProductCarouselItem from '@/app/_components/product-carousel-item';
 
 import { getProductsWithDiscount } from '@/app/_data-access/product/get-products-with-discount';
+import ProductShowcase from '../../_components/product-showcase';
 
 interface ProductPageProps {
     id: string;
@@ -43,23 +37,11 @@ const ProductDetails = async ({ params }: { params: ProductPageProps }) => {
 
                 <ProductInfo product={product} />
             </div>
-            <div className="relative space-y-6 md:space-y-12">
-                <SectionHeader>
-                    <SectionTitle>Mais Vendidos</SectionTitle>
-                    <SectionDescription>
-                        Nossos melhores produtos
-                    </SectionDescription>
-                </SectionHeader>
-
-                <ProductCarousel>
-                    {productsWithDiscount.map((product) => (
-                        <ProductCarouselItem
-                            key={product.id}
-                            product={product}
-                        />
-                    ))}
-                </ProductCarousel>
-            </div>
+            <ProductShowcase
+                title="Mais Vendidos"
+                description="Nossos melhores produtos"
+                products={productsWithDiscount}
+            />
         </Container>
     );
 };
