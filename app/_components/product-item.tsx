@@ -62,8 +62,8 @@ const ProductItem = (product: ProductItemProps) => {
                     </Button>
                 </div>
             </div>
-            <div className="h-full w-full space-y-2">
-                <h3 className="text-primary font-semibold uppercase">
+            <div className="flex h-full w-full flex-col space-y-2">
+                <h3 className="text-primary w-11/12 truncate font-semibold uppercase">
                     {product.title}
                 </h3>
                 {product.discountedPrice ? (
