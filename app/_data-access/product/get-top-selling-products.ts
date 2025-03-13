@@ -17,8 +17,6 @@ export const getTopSellingProducts = async (): Promise<GetProducDTO[]> => {
 
     const filteredProducts = filterValidImages(data);
 
-    console.log(filteredProducts);
-
     const products = filteredProducts
         .map((product: Product): GetProducDTO => {
             return {
