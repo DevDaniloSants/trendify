@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from './_components/navbar';
 import { AppProvider } from './_providers/app-provider';
 import { Toaster } from './_components/ui/sonner';
+import Footer from './_components/footer';
 
 const mulish = Mulish({
     subsets: ['latin-ext'],
@@ -27,6 +28,7 @@ export default function RootLayout({
                     <main className="mt-22 flex h-full w-dvw justify-center md:mt-30">
                         {children}
                     </main>
+                    <Footer />
                     <Toaster />
                 </AppProvider>
             </body>
