@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { EyeIcon, Heart } from 'lucide-react';
 import { Button } from './ui/button';
-import Link from 'next/link';
 import { useCart } from '../_hooks/useCart';
+import ProductItemButton from './product-item-button';
 
 export interface ProductItemProps {
     id: number;
@@ -47,21 +47,11 @@ const ProductItem = (product: ProductItemProps) => {
                     )}
 
                 <div className="absolute top-3 right-3 flex flex-col gap-2">
-                    <Button
-                        size="icon"
-                        className="text-primary cursor-pointer rounded-full bg-white hover:bg-white/70"
-                    >
-                        <Heart />
-                    </Button>
-                    <Button
-                        size="icon"
-                        className="text-primary cursor-pointer rounded-full bg-white hover:bg-white/70"
-                        asChild
-                    >
-                        <Link href={`/product/${product.id}`}>
-                            <EyeIcon />
-                        </Link>
-                    </Button>
+                    <ProductItemButton icon={<Heart />} />
+                    <ProductItemButton
+                        icon={<EyeIcon />}
+                        href={`/product/${product.id}`}
+                    />
                 </div>
                 <div className="flex items-center justify-center">
                     <Button
