@@ -53,8 +53,8 @@ const ProductItem = (product: ProductItemProps) => {
                     </Button>
                 </div>
             </div>
-            <div className="space-y-2 pt-4">
-                <h3 className="text-primary w-[90%] truncate font-semibold uppercase">
+            <div className="h-full w-full space-y-2">
+                <h3 className="text-primary font-semibold uppercase">
                     {product.title}
                 </h3>
                 {product.discountedPrice ? (
