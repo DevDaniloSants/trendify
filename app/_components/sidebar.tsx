@@ -5,17 +5,13 @@ import {
     SheetHeader,
     SheetTitle,
 } from './ui/sheet';
+import { Category } from '../_data-access/interfaces/category';
 
 interface SidebarProps {
-    sidebarItemsMenu: {
-        name: string;
-        href: string;
-        icon: React.ReactElement;
-        index: number;
-    }[];
+    categories: Category[];
 }
 
-const Sidebar = ({ sidebarItemsMenu }: SidebarProps) => {
+const Sidebar = ({ categories }: SidebarProps) => {
     return (
         <SheetContent>
             <SheetHeader className="pb-0">
@@ -25,14 +21,13 @@ const Sidebar = ({ sidebarItemsMenu }: SidebarProps) => {
                 <SheetDescription className="text-start">Menu</SheetDescription>
             </SheetHeader>
             <div className="space-y-4 p-3">
-                {sidebarItemsMenu.map((item) => (
+                {categories.map((category) => (
                     <Link
-                        href={item.href}
-                        key={item.index}
+                        href={`/category/${category.slug}`}
+                        key={category.id}
                         className="text-muted-foreground transition-bg flex gap-2 rounded-sm px-2 py-3 duration-200 hover:bg-gray-800 hover:text-white"
                     >
-                        {item.icon}
-                        <p className="text-sm font-semibold">{item.name}</p>
+                        <p className="text-sm font-semibold">{category.name}</p>
                     </Link>
                 ))}
             </div>
