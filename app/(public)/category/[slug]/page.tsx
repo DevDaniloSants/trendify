@@ -7,7 +7,7 @@ import ProductsByCategory from '../../_components/products-by-category';
 
 const CategoryPage = async ({ params }: { params: { slug: string } }) => {
     const { slug } = await params;
-    const categories = await getCategories();
+    const { data: categories } = await getCategories();
     const products = await getProductsByCategory({ slug });
 
     if (!slug) return notFound();
@@ -21,7 +21,7 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
                 <div className={`border-border mt-6 border py-3 pl-5 sm:block`}>
                     <p className="mb-3 text-sm">CATEGORIAS</p>
                     <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-                        {categories.map((category) => (
+                        {categories?.map((category) => (
                             <Link
                                 href={`/category/${category.slug}`}
                                 key={category.id}

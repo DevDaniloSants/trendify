@@ -24,8 +24,9 @@ const Navbar = () => {
     useLayoutEffect(() => {
         async function loadCategories() {
             try {
-                const data = await getCategories();
-                setCategories(data);
+                const { data: categories } = await getCategories();
+                if (!categories) return;
+                setCategories(categories);
             } catch (error) {
                 console.error('Erro ao carregar categorias:', error);
             } finally {
