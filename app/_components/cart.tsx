@@ -6,6 +6,7 @@ import {
     Sheet,
     SheetContent,
     SheetDescription,
+    SheetFooter,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
@@ -13,9 +14,10 @@ import {
 import { Button } from './ui/button';
 import { useCart } from '../_hooks/useCart';
 import CartItem from './cart-item';
+import { formatCurrency } from '../_helpers/formatCurrency';
 
 const Cart = () => {
-    const { products } = useCart();
+    const { products, total } = useCart();
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -30,13 +32,30 @@ const Cart = () => {
                             <ShoppingCart size={16} /> Trendify
                         </div>
                     </SheetTitle>
-                    <SheetDescription>2 items</SheetDescription>
+                    <SheetDescription />
                 </SheetHeader>
-                <div className="space-y-3">
+                <div className="space-y-3 overflow-y-auto">
                     {products.map((product) => (
                         <CartItem key={product.id} product={product} />
                     ))}
                 </div>
+                <SheetFooter>
+                    <div className="w-full">
+                        <div className="flex w-full items-center justify-between">
+                            <span className="text-lg font-semibold">
+                                Total:
+                            </span>
+                            <p>{formatCurrency(total)}</p>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span className="text-lg font-semibold">
+                                Entrega:
+                            </span>
+                            <p>GRÁTIS</p>
+                        </div>
+                    </div>
+                    <Button>Checkout</Button>
+                </SheetFooter>
             </SheetContent>
         </Sheet>
     );

@@ -45,6 +45,9 @@ const nextConfig: NextConfig = {
             {
                 hostname: 'products.com',
             },
+            {
+                hostname: 'placeimg.com',
+            },
         ],
     },
 };

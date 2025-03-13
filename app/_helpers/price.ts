@@ -28,3 +28,7 @@ export const applyDiscountToProduct = (
         discountPercentage,
     };
 };
+
+export const convertPriceToNumber = (price: string) => {
+    return Number(price.replace('R$', '').replace(',', '.').trim());
+};

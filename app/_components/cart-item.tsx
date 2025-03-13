@@ -42,8 +42,8 @@ const CartItem = ({ product }: CartItemProps) => {
                         className="h-full w-full object-contain"
                     />
                 </div>
-                <div className="flex w-full flex-col">
-                    <p className="w-full truncate text-xs">{product.title}</p>
+                <div className="flex w-full flex-col overflow-hidden">
+                    <p className="w-[90%] truncate text-xs">{product.title}</p>
 
                     <p className="text-sm font-bold">{product.price}</p>
 
