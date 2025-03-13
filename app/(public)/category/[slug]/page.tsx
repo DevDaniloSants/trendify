@@ -8,7 +8,7 @@ import ProductsByCategory from '../../_components/products-by-category';
 const CategoryPage = async ({ params }: { params: { slug: string } }) => {
     const { slug } = await params;
     const { data: categories } = await getCategories();
-    const products = await getProductsByCategory({ slug });
+    const { data: products } = await getProductsByCategory({ slug });
 
     if (!slug) return notFound();
 
@@ -33,7 +33,7 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
                     </div>
                 </div>
             </div>
-            <ProductsByCategory slug={slug} products={products} />
+            {products && <ProductsByCategory products={products} slug={slug} />}
         </Container>
     );
 };

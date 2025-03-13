@@ -9,25 +9,50 @@ export const getProductsByCategory = async ({
     slug,
 }: {
     slug: string;
-}): Promise<GetProducDTO[]> => {
-    const data = await fetch(
-        process.env.API_URL + '/products/?categorySlug=' + slug
-    ).then((res) => res.json());
+}): Promise<{
+    status: number;
+    success: boolean;
+    message: string;
+    data?: GetProducDTO[];
+}> => {
+    try {
+        const response = await fetch(
+            process.env.API_URL + '/products/?categorySlug=' + slug
+        );
 
-    if (!data) {
-        throw new Error('Failed to fetch data');
-    }
-
-    const filteredProducts = filterValidImages(data);
-
-    const products = filteredProducts
-        .map((product: Product): GetProducDTO => {
+        if (!response.ok) {
+            const errorData = await response.json();
             return {
-                ...product,
-                price: formatCurrency(product.price),
+                status: response.status,
+                success: false,
+                message: errorData?.message || 'Failed to fetch products',
             };
-        })
-        .slice(0, 10);
+        }
 
-    return products;
+        const data: Product[] = await response.json();
+        const filteredProducts = filterValidImages(data);
+
+        const products = filteredProducts
+            .map((product: Product): GetProducDTO => {
+                return {
+                    ...product,
+                    price: formatCurrency(product.price),
+                };
+            })
+            .slice(0, 10);
+
+        return {
+            status: response.status,
+            success: true,
+            message: 'Products fetched successfully',
+            data: products,
+        };
+    } catch (error: unknown) {
+        console.error('Error fetching products:', error);
+        return {
+            status: 500,
+            success: false,
+            message: error instanceof Error ? error.message : 'Server error',
+        };
+    }
 };
