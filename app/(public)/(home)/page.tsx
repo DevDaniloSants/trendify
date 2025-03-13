@@ -6,7 +6,7 @@ import Container from '@/app/_components/container';
 import ProductShowcase from '../_components/product-showcase';
 
 const Home = async () => {
-    const productsWithDiscount = await getProductsWithDiscount();
+    const { data: productsWithDiscount } = await getProductsWithDiscount();
 
     const topProducts = await getTopSellingProducts();
 
@@ -18,7 +18,7 @@ const Home = async () => {
                 <ProductShowcase
                     title="Produtos mais vendidos"
                     description="Confira nossos produtos mais vendidos"
-                    products={productsWithDiscount}
+                    products={productsWithDiscount || []}
                 />
             </div>
 

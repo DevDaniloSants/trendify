@@ -16,9 +16,9 @@ interface ProductPageProps {
 const ProductDetails = async ({ params }: { params: ProductPageProps }) => {
     const { id } = await params;
 
-    const product = await getProduct(id);
+    const { data: product } = await getProduct(id);
 
-    const productsWithDiscount = await getProductsWithDiscount();
+    const { data: productsWithDiscount } = await getProductsWithDiscount();
 
     if (!product) {
         return notFound();
@@ -40,7 +40,7 @@ const ProductDetails = async ({ params }: { params: ProductPageProps }) => {
             <ProductShowcase
                 title="Mais Vendidos"
                 description="Nossos melhores produtos"
-                products={productsWithDiscount}
+                products={productsWithDiscount || []}
             />
         </Container>
     );
