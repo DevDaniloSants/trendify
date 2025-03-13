@@ -42,6 +42,9 @@ const nextConfig: NextConfig = {
             {
                 hostname: 'goo.su',
             },
+            {
+                hostname: 'products.com',
+            },
         ],
     },
 };

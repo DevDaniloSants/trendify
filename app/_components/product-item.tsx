@@ -1,13 +1,14 @@
 import Image from 'next/image';
-import { Heart } from 'lucide-react';
+import { EyeIcon, Heart } from 'lucide-react';
 import { Button } from './ui/button';
+import Link from 'next/link';
 
 export interface ProductItemProps {
     id: number;
     title: string;
     price: string;
     discountPercentage?: number;
-    image: string;
+    images: string[];
     discountedPrice?: string;
 }
 
@@ -16,7 +17,7 @@ const ProductItem = (product: ProductItemProps) => {
         <div key={product.id} className="h-[350px] w-full">
             <div className="group bg-border relative h-[250px] w-full overflow-hidden">
                 <Image
-                    src={product.image}
+                    src={product.images[0]}
                     alt={product.title}
                     fill
                     sizes="100%"
@@ -29,12 +30,23 @@ const ProductItem = (product: ProductItemProps) => {
                         </span>
                     )}
 
-                <Button
-                    size="icon"
-                    className="text-primary absolute top-3 right-3 cursor-pointer rounded-full bg-white hover:bg-white/70"
-                >
-                    <Heart />
-                </Button>
+                <div className="absolute top-3 right-3 flex flex-col gap-2">
+                    <Button
+                        size="icon"
+                        className="text-primary cursor-pointer rounded-full bg-white hover:bg-white/70"
+                    >
+                        <Heart />
+                    </Button>
+                    <Button
+                        size="icon"
+                        className="text-primary cursor-pointer rounded-full bg-white hover:bg-white/70"
+                        asChild
+                    >
+                        <Link href={`/product/${product.id}`}>
+                            <EyeIcon />
+                        </Link>
+                    </Button>
+                </div>
                 <div className="flex items-center justify-center">
                     <Button className="hover:bg-primary absolute bottom-0 hidden w-full cursor-pointer rounded-none group-hover:block">
                         Adicionar ao carrinho
