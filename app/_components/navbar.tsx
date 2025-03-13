@@ -39,7 +39,7 @@ const Navbar = () => {
     return (
         <Sheet>
             <header className="border-border fixed top-0 left-0 z-50 h-[70px] w-full border-b bg-white">
-                <nav className="mx-auto flex h-[70px] w-full justify-between px-4 py-5 text-sm">
+                <nav className="mx-auto flex w-full justify-between px-4 py-5 text-sm">
                     <Link href="/" className="text-2xl font-extrabold">
                         Trendify
                     </Link>
@@ -53,7 +53,7 @@ const Navbar = () => {
                                     <li key={item.index} className="h-full">
                                         <Link
                                             href={item.href}
-                                            className="relative w-fit text-base font-bold before:absolute before:bottom-[-30px] before:h-[2px] before:w-0 before:bg-black before:transition-all before:duration-300 hover:before:left-0 hover:before:w-full"
+                                            className="relative w-fit text-base font-bold before:absolute before:bottom-[-26px] before:h-[2px] before:w-0 before:bg-black before:transition-all before:duration-300 hover:before:left-0 hover:before:w-full"
                                         >
                                             <p>{item.name}</p>
                                         </Link>
@@ -63,7 +63,7 @@ const Navbar = () => {
                                 <li className="group relative h-full">
                                     <Link
                                         href={'#'}
-                                        className="relative text-base font-bold before:absolute before:bottom-[-30px] before:h-[2px] before:w-0 before:bg-black before:transition-all before:duration-300 hover:before:left-0 hover:before:w-full"
+                                        className="relative text-base font-bold before:absolute before:bottom-[-26px] before:h-[2px] before:w-0 before:bg-black before:transition-all before:duration-300 hover:before:left-0 hover:before:w-full"
                                     >
                                         Store
                                     </Link>
