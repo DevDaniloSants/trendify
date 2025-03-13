@@ -34,28 +34,49 @@ const Cart = () => {
                     </SheetTitle>
                     <SheetDescription />
                 </SheetHeader>
-                <div className="space-y-3 overflow-y-auto">
-                    {products.map((product) => (
-                        <CartItem key={product.id} product={product} />
-                    ))}
-                </div>
-                <SheetFooter>
-                    <div className="w-full">
-                        <div className="flex w-full items-center justify-between">
-                            <span className="text-lg font-semibold">
-                                Total:
-                            </span>
-                            <p>{formatCurrency(total)}</p>
+                {products.length > 0 ? (
+                    <>
+                        <div className="space-y-3 overflow-y-auto">
+                            {products.map((product) => (
+                                <CartItem key={product.id} product={product} />
+                            ))}
                         </div>
-                        <div className="flex items-center justify-between">
-                            <span className="text-lg font-semibold">
-                                Entrega:
-                            </span>
-                            <p>GRÁTIS</p>
+                        <SheetFooter>
+                            <div className="w-full">
+                                <div className="flex w-full items-center justify-between">
+                                    <span className="text-lg font-semibold">
+                                        Total:
+                                    </span>
+                                    <p>{formatCurrency(total)}</p>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-lg font-semibold">
+                                        Entrega:
+                                    </span>
+                                    <p>GRÁTIS</p>
+                                </div>
+                            </div>
+                            <Button>Checkout</Button>
+                        </SheetFooter>
+                    </>
+                ) : (
+                    <div className="flex h-full items-center justify-center">
+                        <div className="flex flex-col items-center gap-4">
+                            <p className="text-center font-semibold">
+                                Seu carrinho está vazio
+                            </p>
+                            <div className="relative">
+                                <ShoppingCart
+                                    size={40}
+                                    className="text-muted-foreground"
+                                />
+                                <span className="bg-destructive absolute -right-3 -bottom-1 h-5 w-5 rounded-full text-center text-sm text-white">
+                                    0
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <Button>Checkout</Button>
-                </SheetFooter>
+                )}
             </SheetContent>
         </Sheet>
     );
