@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import { EyeIcon, Heart } from 'lucide-react';
 import { Button } from './ui/button';
 import Link from 'next/link';
+import { useCart } from '../_hooks/useCart';
 
 export interface ProductItemProps {
     id: number;
@@ -13,6 +16,19 @@ export interface ProductItemProps {
 }
 
 const ProductItem = (product: ProductItemProps) => {
+    const { addProductToCart } = useCart();
+
+    const handleAddToCart = () => {
+        const productCart = {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: product.images[0],
+            quantity: 1,
+        };
+        addProductToCart(productCart);
+    };
+
     return (
         <div key={product.id} className="h-[350px] w-full">
             <div className="group bg-border relative h-[250px] w-full overflow-hidden">
@@ -48,7 +64,10 @@ const ProductItem = (product: ProductItemProps) => {
                     </Button>
                 </div>
                 <div className="flex items-center justify-center">
-                    <Button className="hover:bg-primary absolute bottom-0 hidden w-full cursor-pointer rounded-none group-hover:block">
+                    <Button
+                        className="hover:bg-primary absolute bottom-0 hidden w-full cursor-pointer rounded-none group-hover:block"
+                        onClick={handleAddToCart}
+                    >
                         Adicionar ao carrinho
                     </Button>
                 </div>
