@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import FormSignIn from '../../_components/form-sign-in';
+import RegisterDialog from '../../_components/register-dialog';
 
 const SignIn = () => {
     return (
@@ -25,6 +26,12 @@ const SignIn = () => {
                         </p>
                     </div>
                     <FormSignIn />
+                    <div className="flex w-full items-center justify-end gap-2">
+                        <p className="text-muted-foreground text-sm">
+                            Você não possui uma conta ?
+                        </p>
+                        <RegisterDialog />
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,18 +1,12 @@
-import { Button } from '@/app/_components/ui/button';
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormMessage,
-} from '@/app/_components/ui/form';
+import { Form } from '@/app/_components/ui/form';
 import { registerSchema } from '@/app/_schemas/auth-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { CustomInputForm } from './custom-input-form';
 import { createUser } from '@/app/_actions/user/create-user';
 import { toast } from 'sonner';
+import InputField from '@/app/_components/input-field';
+import SubmitButton from '@/app/_components/submit-button';
 
 interface FormRegisterProps {
     toggleRegisterDialog: () => void;
@@ -45,99 +39,39 @@ const FormRegister = ({ toggleRegisterDialog }: FormRegisterProps) => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-                <FormField
-                    control={form.control}
+                <InputField
                     name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <CustomInputForm
-                                    {...field}
-                                    type="name"
-                                    placeholder="Nome"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                    type="text"
+                    placeholder="Nome"
+                    control={form.control}
                 />
-                <FormField
+                <InputField
                     control={form.control}
                     name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <CustomInputForm
-                                    {...field}
-                                    type="email"
-                                    placeholder="Email"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                    type="email"
+                    placeholder="Email"
                 />
-                <FormField
+
+                <InputField
                     control={form.control}
                     name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <CustomInputForm
-                                    {...field}
-                                    type="password"
-                                    placeholder="Senha"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                    type="password"
+                    placeholder="Senha"
                 />
-                <FormField
+                <InputField
                     control={form.control}
                     name="confirmPassword"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <CustomInputForm
-                                    {...field}
-                                    type="password"
-                                    placeholder="Digite sua senha novamente"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                    type="password"
+                    placeholder="Confirme sua senha"
                 />
-                <FormField
+                <InputField
                     control={form.control}
                     name="avatar"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <CustomInputForm
-                                    {...field}
-                                    type="text"
-                                    placeholder="Insira uma url"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                    type="text"
+                    placeholder="Insira uma url"
                 />
-                <Button
-                    type="submit"
-                    className="bg-destructive hover:bg-destructive/90 w-full cursor-pointer py-6 text-white"
-                >
-                    {form.formState.isSubmitting ? (
-                        <div className="flex items-center justify-center">
-                            <span className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></span>
-                            <span>Carregando...</span>
-                        </div>
-                    ) : (
-                        'Cadastrar'
-                    )}
-                </Button>
+
+                <SubmitButton form={form} title="Registrar" />
             </form>
         </Form>
     );
