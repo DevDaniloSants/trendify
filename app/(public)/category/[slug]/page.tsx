@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ProductsByCategory from '../../_components/products-by-category';
 
-const Products = async ({ params }: { params: { slug: string } }) => {
+const CategoryPage = async ({ params }: { params: { slug: string } }) => {
     const { slug } = await params;
     const categories = await getCategories();
     const products = await getProductsByCategory({ slug });
@@ -38,4 +38,4 @@ const Products = async ({ params }: { params: { slug: string } }) => {
     );
 };
 
-export default Products;
+export default CategoryPage;
