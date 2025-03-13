@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Heart, ShoppingCart, UserRound } from 'lucide-react';
+import { Heart, UserRound } from 'lucide-react';
 import { Sheet } from './ui/sheet';
 
 import { NAVBAR_ITEMS } from '../_constants/navbar-items';
@@ -12,6 +12,7 @@ import SidebarButton from './sidebar-button';
 import { useUser } from '../_hooks/useUser';
 
 import UserDropDownButton from './user-drop-down-button';
+import Cart from './cart';
 
 const Navbar = () => {
     const { user, logout } = useUser();
@@ -53,7 +54,7 @@ const Navbar = () => {
                         )}
                         <NavbarCustomButton icon={<Heart />} />
 
-                        <NavbarCustomButton icon={<ShoppingCart />} />
+                        <Cart />
 
                         <SidebarButton />
                     </div>

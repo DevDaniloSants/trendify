@@ -2,6 +2,7 @@
 
 import { Button } from '@/app/_components/ui/button';
 import { GetProducDTO } from '@/app/_data-access/interfaces/product';
+import { useCart } from '@/app/_hooks/useCart';
 import {
     HeartIcon,
     MinusIcon,
@@ -12,12 +13,13 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 
-interface ProductInfo {
-    product: Pick<GetProducDTO, 'title' | 'description' | 'price'>;
+export interface ProductInfo {
+    product: GetProducDTO;
 }
 
 const ProductInfo = ({ product }: ProductInfo) => {
     const [quantity, setQuantity] = useState<number>(1);
+    const { addProductToCart } = useCart();
 
     const handleDecreaseQuantity = () => {
         setQuantity((prev) => (prev === 1 ? prev : prev - 1));
@@ -25,6 +27,17 @@ const ProductInfo = ({ product }: ProductInfo) => {
 
     const handleIncreaseQuantity = () => {
         setQuantity((prev) => prev + 1);
+    };
+
+    const handleAddToCart = () => {
+        const productCart = {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: product.images[0],
+            quantity,
+        };
+        addProductToCart(productCart);
     };
 
     return (
@@ -94,6 +107,7 @@ const ProductInfo = ({ product }: ProductInfo) => {
                     <Button
                         variant={'destructive'}
                         className="h-14 w-2/3 lg:w-auto"
+                        onClick={handleAddToCart}
                     >
                         Adicionar ao Carrinho
                     </Button>
