@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📦 Trendify
+    Este projeto é uma aplicação de e-commerce construída com React e Next.js 15. Utiliza TypeScript para garantir uma codificação robusta e fácil de manter, e Tailwind CSS para garantir um design responsivo e moderno. O objetivo deste projeto é fornecer uma plataforma funcional de e-commerce com funcionalidades como visualização de produtos, categorias, carrinho de compras, login e área do usuário.
 
-## Getting Started
+## 🚀 Tecnologias Utilizadas
 
-First, run the development server:
+- **React**: Biblioteca para construção de interfaces de usuário.
+- **Next.js 15**: Framework para renderização do lado do servidor e roteamento otimizado.
+- **TypeScript**: Tipagem estática para garantir robustez e manutenção do código.
+- **Tailwind CSS**: Framework CSS de utilitários para design responsivo e customizado.
+- **ShadCN**: Biblioteca de componentes UI para React, utilizada para criar interfaces modulares e estéticas, otimizadas para uma experiência de usuário suave e eficiente.
+- **FakeAPI (Platzi)**: API falsa para simulação de dados de produtos, categorias, carrinho, login e cadastro.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ **Husky, lint-staged, Prettier e ESLint**
+   &nbsp; Para manter a qualidade do código e a consistência do estilo, foram implementadas ferramentas como Husky, lint-staged, Prettier e ESLint, garantindo que o código permaneça limpo, organizado e aderente às melhores práticas do mercado.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📌 Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Tela Principal**: Página inicial com produtos em destaque e uma visão geral do e-commerce.
+- **Categorias de Produtos**: Página onde os usuários podem filtrar produtos por categoria.
+- **Carrinho de Compras**: Funcionalidade para adicionar, remover e listar produtos no carrinho.
+- **Tela de Produto**: Página onde o usuário pode ver os detalhes de um produto selecionado.
+- **Login e Cadastro**: Autenticação de usuários com endpoints para login e registro.
+- **Área do Usuário**: Dashboard onde o usuário autenticado pode visualizar dados pessoais e histórico de compras.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Como Rodar o Projeto
 
-## Learn More
+### 📌 Pré-requisitos
 
-To learn more about Next.js, take a look at the following resources:
+- **Node.js** (versão recomendada 16 ou superior)
+- **npm** 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📌 Passos para Execução
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone o repositório:
 
-## Deploy on Vercel
+    ```bash
+    git clone https://github.com/DevDaniloSants/trendify.git
+    cd ecommerce
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Instale as dependências:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    Usando npm:
+
+    ```bash
+    npm install
+    ```
+
+3. Adicione na raiz do projeto um arquivo .env:
+
+    ```bash
+    API_URL='https://api.escuelajs.co/api/v1'
+    ```
+
+4. Execute o projeto em modo de desenvolvimento:
+
+    Usando npm:
+
+    ```bash
+    npm run dev
+    ```
+
+
+5. Abra seu navegador e acesse:
+
+    ```
+    http://localhost:3000
+    ```
+
+## 📂 Estrutura do Projeto
+
+A estrutura do projeto foi planejada para ser modular, escalável e de fácil manutenção.
+
+### 🏷️ **Páginas**
+- **`(private)/` e `(public)/`** → Contêm todas as páginas do projeto, separadas entre privadas (restritas a usuários autenticados) e públicas.
+- **`_components/` dentro de cada uma pasta → Componentes exclusivos para páginas privadas ou públicas.
+- **`_components/` global** → Componentes reutilizados tanto em páginas públicas quanto privadas.
+
+### ⚙️ **Ações e Camada de Acesso a Dados**
+- **`actions/`** → Gerencia **mutações** na Fake API, como `POST`, `PUT` e `DELETE`.
+- **`data-access/`** → Responsável apenas por **requisições GET**, garantindo uma separação clara de responsabilidades.
+
+### 📦 **Gerenciamento de Estado**
+- **`Context API`** → Usado para gerenciar o estado global (exemplo: estado do carrinho).
+- **`Local Storage`** → Utilizado para persistir informações importantes, como o carrinho de compras e os dados do usuário.
+
+### 📡 **Rotas da API Utilizadas**
+
+    ```
+    # Criar um usuário
+    POST ${process.env.API_URL}/users/
+
+    # Listar categorias
+    GET ${process.env.API_URL}/categories
+
+    # Filtrar produtos por categoria
+    GET ${process.env.API_URL}/products/?categorySlug={slug}
+
+    # Obter um produto pelo ID
+    GET ${process.env.API_URL}/products/{id}
+
+    # Listar produtos com paginação
+    GET ${process.env.API_URL}/products/?offset=10&limit=10
+
+    # Filtrar produtos por preço
+    GET ${process.env.API_URL}/products/?price_min=20&price_max=100000000&offset=10&limit=100
+
+    # Obter dados do usuário autenticado
+    GET ${process.env.API_URL}/auth/profile
+
+    # Login do usuário
+    POST ${process.env.API_URL}/auth/login
+    ```
+
+### 🔄 **Hooks Personalizados**
+Os hooks ajudam a abstrair lógicas e reutilizar código.  
+
+
+
+:child: Author
+<table> <tr> <td align="center"> <img src="https://avatars.githubusercontent.com/u/152008168?s=400&u=710379e70ac9c4490d3044ffd12a47092b993f76&v=4" width="100px;" alt="Foto de Danilo Santos no GitHub"/><br> <sub> <b>Danilo Santos</b> </sub> </a> </td> </tr> </table>
