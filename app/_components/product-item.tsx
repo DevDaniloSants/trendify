@@ -30,8 +30,8 @@ const ProductItem = (product: ProductItemProps) => {
     };
 
     return (
-        <div key={product.id} className="h-[350px] w-full">
-            <div className="group bg-border relative h-[250px] w-full overflow-hidden">
+        <div key={product.id} className="flex h-[400px] w-full flex-col">
+            <div className="group bg-border relative w-full flex-1 overflow-hidden">
                 <Image
                     src={product.images[0]}
                     alt={product.title}
@@ -62,8 +62,9 @@ const ProductItem = (product: ProductItemProps) => {
                     </Button>
                 </div>
             </div>
-            <div className="flex h-full w-full flex-col space-y-2">
-                <h3 className="text-primary w-11/12 truncate font-semibold uppercase">
+
+            <div className="flex h-[100px] w-full flex-col justify-between px-3 py-2">
+                <h3 className="text-primary line-clamp-2 overflow-hidden font-semibold break-words uppercase">
                     {product.title}
                 </h3>
                 {product.discountedPrice ? (

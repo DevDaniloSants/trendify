@@ -15,6 +15,12 @@ import { Category } from '../_data-access/interfaces/category';
 import { useLayoutEffect, useState } from 'react';
 import { getCategories } from '../_data-access/category/get-categories';
 import { NAVBAR_ITEMS } from '../_constants/navbar-items';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from './ui/dropdown-menu';
 
 const Navbar = () => {
     const { user, logout } = useUser();
@@ -62,30 +68,40 @@ const Navbar = () => {
                                 ))}
 
                                 <li className="group relative h-full">
-                                    <Link
-                                        href={'#'}
-                                        className="relative text-base font-bold before:absolute before:bottom-[-26px] before:h-[2px] before:w-0 before:bg-black before:transition-all before:duration-300 hover:before:left-0 hover:before:w-full"
-                                    >
-                                        Store
-                                    </Link>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger className="relative text-base font-bold">
+                                            Store
+                                        </DropdownMenuTrigger>
 
-                                    <div className="absolute top-6 left-0 z-50 hidden w-48 rounded-md border border-gray-200 bg-white py-2 shadow-lg group-hover:block">
-                                        {isLoading ? (
-                                            <div className="px-4 py-2 text-sm">
-                                                Carregando...
-                                            </div>
-                                        ) : (
-                                            categories?.map((category) => (
-                                                <Link
-                                                    key={category.id}
-                                                    href={`/category/${category.slug}`}
-                                                    className="block px-4 py-2 text-sm hover:bg-gray-100"
-                                                >
-                                                    {category.name}
-                                                </Link>
-                                            ))
-                                        )}
-                                    </div>
+                                        <div>
+                                            {isLoading ? (
+                                                <div className="px-4 py-2 text-sm">
+                                                    Carregando...
+                                                </div>
+                                            ) : (
+                                                <DropdownMenuContent className="w-56">
+                                                    {categories.map(
+                                                        (category) => (
+                                                            <DropdownMenuLabel
+                                                                key={
+                                                                    category.id
+                                                                }
+                                                                className="px-4 py-2 text-sm"
+                                                            >
+                                                                <Link
+                                                                    href={`/category/${category.slug}`}
+                                                                >
+                                                                    {
+                                                                        category.name
+                                                                    }
+                                                                </Link>
+                                                            </DropdownMenuLabel>
+                                                        )
+                                                    )}
+                                                </DropdownMenuContent>
+                                            )}
+                                        </div>
+                                    </DropdownMenu>
                                 </li>
                             </ul>
                         )}
