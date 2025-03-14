@@ -9,11 +9,13 @@ import { getProduct } from '@/app/_data-access/product/get-product';
 import { getProductsWithDiscount } from '@/app/_data-access/product/get-products-with-discount';
 import ProductShowcase from '../../_components/product-showcase';
 
-interface ProductPageProps {
-    id: string;
-}
+type ProductPageProps = { id: string };
 
-const ProductDetails = async ({ params }: { params: ProductPageProps }) => {
+const ProductDetails = async ({
+    params,
+}: {
+    params: Promise<ProductPageProps>;
+}) => {
     const { id } = await params;
 
     const { data: product } = await getProduct(id);

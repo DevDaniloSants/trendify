@@ -5,8 +5,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ProductsByCategory from '../../_components/products-by-category';
 
-const CategoryPage = async ({ params }: { params: { slug: string } }) => {
+const CategoryPage = async ({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) => {
     const { slug } = await params;
+
     const { data: categories } = await getCategories();
     const { data: products } = await getProductsByCategory({ slug });
 
