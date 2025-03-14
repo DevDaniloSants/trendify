@@ -1,4 +1,4 @@
-import { LogOutIcon } from 'lucide-react';
+import { LogOutIcon, UserIcon } from 'lucide-react';
 import { UserProfile } from '../_data-access/interfaces/user';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
@@ -10,6 +10,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import Link from 'next/link';
 
 interface UserDropDownButtonProps {
     user: UserProfile;
@@ -37,11 +38,24 @@ const UserDropDownButton = ({
             <DropdownMenuContent>
                 <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Perfil</DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Button
+                        className="h-7 w-full cursor-pointer p-1 hover:bg-transparent"
+                        variant={'ghost'}
+                    >
+                        <Link
+                            href={'/profile'}
+                            className="flex items-center gap-2"
+                        >
+                            <UserIcon />
+                            Perfil
+                        </Link>
+                    </Button>
+                </DropdownMenuItem>
                 <DropdownMenuItem>
                     <Button
                         onClick={handleLogoutClick}
-                        className="h-7 w-full cursor-pointer justify-start hover:bg-transparent"
+                        className="h-7 w-full cursor-pointer p-1 hover:bg-transparent"
                         variant="ghost"
                     >
                         <LogOutIcon />
