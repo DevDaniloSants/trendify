@@ -17,12 +17,18 @@ import CartItem from './cart-item';
 import { formatCurrency } from '../_helpers/formatCurrency';
 
 const Cart = () => {
-    const { products, total } = useCart();
+    const { products, total, totalProducts } = useCart();
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button className="cursor-pointer" variant="ghost">
+                <Button
+                    className="relative w-7 cursor-pointer hover:bg-transparent"
+                    variant="ghost"
+                >
                     <ShoppingCart />
+                    <span className="bg-destructive absolute top-4 -right-2 flex h-4 w-4 items-center justify-center rounded-full text-xs text-white">
+                        {totalProducts}
+                    </span>
                 </Button>
             </SheetTrigger>
             <SheetContent className="p-2">
