@@ -14,7 +14,7 @@ export const getTopSellingProducts = async (): Promise<{
     try {
         const response = await fetch(
             process.env.API_URL +
-                '/products/?price_min=20&price_max=100000000&offset=10&limit=100'
+                '/products/?price_min=50&price_max=100000000&offset=10&limit=100'
         );
 
         if (!response.ok) {
