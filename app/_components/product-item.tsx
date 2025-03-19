@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { EyeIcon, Heart } from 'lucide-react';
 import { Button } from './ui/button';
 import { useCart } from '../_hooks/useCart';
-import ProductItemButton from './product-item-button';
+import { useFavorite } from '../_hooks/useFavorite';
+import Link from 'next/link';
 
 export interface ProductItemProps {
     id: number;
@@ -17,6 +18,7 @@ export interface ProductItemProps {
 
 const ProductItem = (product: ProductItemProps) => {
     const { addProductToCart } = useCart();
+    const { addFavorite, favorite } = useFavorite();
 
     const handleAddToCart = () => {
         const productCart = {
@@ -27,6 +29,16 @@ const ProductItem = (product: ProductItemProps) => {
             quantity: 1,
         };
         addProductToCart(productCart);
+    };
+
+    const handleAddToFavorite = () => {
+        const productFavorite = {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: product.images[0],
+        };
+        addFavorite(productFavorite);
     };
 
     return (
@@ -47,11 +59,29 @@ const ProductItem = (product: ProductItemProps) => {
                     )}
 
                 <div className="absolute top-3 right-3 flex flex-col gap-2">
-                    <ProductItemButton icon={<Heart />} />
-                    <ProductItemButton
-                        icon={<EyeIcon />}
-                        href={`/product/${product.id}`}
-                    />
+                    <Button
+                        size="icon"
+                        onClick={handleAddToFavorite}
+                        className={`${
+                            favorite.some(
+                                (favoriteProduct) =>
+                                    favoriteProduct.id === product.id
+                            )
+                                ? 'bg-destructive hover:bg-destructive/80'
+                                : 'text-primary bg-white hover:bg-white/80'
+                        } cursor-pointer rounded-full`}
+                    >
+                        <Heart />
+                    </Button>
+                    <Button
+                        size="icon"
+                        className="text-primary cursor-pointer rounded-full bg-white hover:bg-white/80"
+                        asChild
+                    >
+                        <Link href={`/product/${product.id}`}>
+                            <EyeIcon />
+                        </Link>
+                    </Button>
                 </div>
                 <div className="flex items-center justify-center">
                     <Button

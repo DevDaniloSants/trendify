@@ -119,7 +119,10 @@ const Navbar = () => {
                                 href="/sign-in"
                             />
                         )}
-                        <NavbarCustomButton icon={<Heart />} />
+                        <NavbarCustomButton
+                            icon={<Heart />}
+                            href="/products/favorite"
+                        />
 
                         <Cart />
 
