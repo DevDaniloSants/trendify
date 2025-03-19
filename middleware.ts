@@ -33,7 +33,7 @@ export function middleware(request: NextRequest) {
     }
 
     const publicRoute = publicRoutes.find((route) => {
-        if (path.startsWith('/product') || path.startsWith('/category')) {
+        if (path.startsWith('/product/') || path.startsWith('/category')) {
             return path.startsWith(route.path);
         }
         return route.path === path;

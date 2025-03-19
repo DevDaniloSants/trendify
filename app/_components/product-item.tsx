@@ -6,6 +6,8 @@ import { Button } from './ui/button';
 import { useCart } from '../_hooks/useCart';
 import { useFavorite } from '../_hooks/useFavorite';
 import Link from 'next/link';
+import { toast } from 'sonner';
+import { useUser } from '../_hooks/useUser';
 
 export interface ProductItemProps {
     id: number;
@@ -17,8 +19,9 @@ export interface ProductItemProps {
 }
 
 const ProductItem = (product: ProductItemProps) => {
+    const { user } = useUser();
     const { addProductToCart } = useCart();
-    const { addFavorite, favorite } = useFavorite();
+    const { addFavorite, favorites, removeFavorite } = useFavorite();
 
     const handleAddToCart = () => {
         const productCart = {
@@ -29,15 +32,32 @@ const ProductItem = (product: ProductItemProps) => {
             quantity: 1,
         };
         addProductToCart(productCart);
+        toast.success('Produto adicionado ao carrinho');
     };
 
     const handleAddToFavorite = () => {
+        if (!user) {
+            toast.error(
+                'Você precisa estar logado para adicionar produtos aos favoritos'
+            );
+            return;
+        }
+        const productIsAlreadyOnFavorite = favorites.some(
+            (favoriteProduct) => favoriteProduct.id === product.id
+        );
+
+        if (productIsAlreadyOnFavorite) {
+            removeFavorite(product.id);
+            toast.success('Produto removido com sucesso');
+            return;
+        }
         const productFavorite = {
             id: product.id,
             title: product.title,
             price: product.price,
-            image: product.images[0],
+            images: product.images,
         };
+        toast.success('Produto adicionado aos favoritos');
         addFavorite(productFavorite);
     };
 
@@ -63,7 +83,7 @@ const ProductItem = (product: ProductItemProps) => {
                         size="icon"
                         onClick={handleAddToFavorite}
                         className={`${
-                            favorite.some(
+                            favorites.some(
                                 (favoriteProduct) =>
                                     favoriteProduct.id === product.id
                             )

@@ -4,46 +4,53 @@ interface FavoriteProduct {
     id: number;
     title: string;
     price: string;
-    image: string;
+    images: string[];
 }
 
 interface IFavoriteContext {
-    favorite: FavoriteProduct[];
+    favorites: FavoriteProduct[];
     addFavorite: (product: FavoriteProduct) => void;
     removeFavorite: (productId: number) => void;
 }
 
 export const FavoriteContext = createContext<IFavoriteContext>({
-    favorite: [],
+    favorites: [],
     addFavorite: () => {},
     removeFavorite: () => {},
 });
 
 const FavoriteProvider = ({ children }: { children: ReactNode }) => {
-    const [favorite, setFavorite] = useState<FavoriteProduct[]>(
+    const [favorites, setFavorites] = useState<FavoriteProduct[]>(
         JSON.parse(localStorage.getItem('@favorite') || '[]')
     );
 
     useEffect(() => {
-        localStorage.setItem('@favorite', JSON.stringify(favorite));
-    }, [favorite]);
+        localStorage.setItem('@favorite', JSON.stringify(favorites));
+    }, [favorites]);
 
     const addFavorite = (product: FavoriteProduct) => {
-        const productIsAlreadyOnFavorite = favorite.some(
+        const productIsAlreadyOnFavorite = favorites.some(
             (favoriteProduct) => favoriteProduct.id === product.id
         );
 
         if (productIsAlreadyOnFavorite) return;
 
-        setFavorite((prev) => [...prev, product]);
+        setFavorites((prev) => [...prev, product]);
+    };
+
+    const removeFavorite = (productId: number) => {
+        const newFavorite = favorites.filter(
+            (product) => product.id !== productId
+        );
+        setFavorites(newFavorite);
     };
 
     return (
         <FavoriteContext.Provider
             value={{
-                favorite,
+                favorites,
                 addFavorite,
-                removeFavorite: () => {},
+                removeFavorite,
             }}
         >
             {children}

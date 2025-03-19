@@ -21,9 +21,12 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import { useFavorite } from '../_hooks/useFavorite';
+import { Button } from './ui/button';
 
 const Navbar = () => {
     const { user, logout } = useUser();
+    const { favorites } = useFavorite();
     const [categories, setCategories] = useState<Category[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -69,7 +72,7 @@ const Navbar = () => {
 
                                 <li className="group relative h-full">
                                     <DropdownMenu>
-                                        <DropdownMenuTrigger className="relative text-base font-bold">
+                                        <DropdownMenuTrigger className="relative cursor-pointer text-base font-bold before:absolute before:bottom-[-26px] before:h-[2px] before:w-0 before:bg-black before:transition-all before:duration-300 hover:before:left-0 hover:before:w-full">
                                             Store
                                         </DropdownMenuTrigger>
 
@@ -119,10 +122,18 @@ const Navbar = () => {
                                 href="/sign-in"
                             />
                         )}
-                        <NavbarCustomButton
-                            icon={<Heart />}
-                            href="/products/favorite"
-                        />
+
+                        <Button
+                            className="relative cursor-pointer hover:bg-transparent"
+                            variant="ghost"
+                        >
+                            <Link href="/products/favorite">
+                                <Heart />
+                            </Link>
+                            <span className="bg-destructive absolute right-1 -bottom-1 flex h-4 w-4 items-center justify-center rounded-full text-xs text-white">
+                                {favorites.length}
+                            </span>
+                        </Button>
 
                         <Cart />
 
