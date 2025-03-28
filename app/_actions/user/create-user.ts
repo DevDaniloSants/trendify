@@ -21,10 +21,13 @@ export const createUser = async (data: User) => {
             };
         }
 
+        const user = await response.json();
+
         return {
             status: response.status,
             success: true,
             message: 'User created successfully!',
+            data: user,
         };
     } catch (error: unknown) {
         console.error('Error creating user:', error);

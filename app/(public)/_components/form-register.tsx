@@ -7,6 +7,7 @@ import { createUser } from '@/app/_actions/user/create-user';
 import { toast } from 'sonner';
 import InputField from '@/app/_components/input-field';
 import SubmitButton from '@/app/_components/submit-button';
+import createUserPostgres from '@/app/_data-access/user/create-user-postgres';
 
 interface FormRegisterProps {
     toggleRegisterDialog: () => void;
@@ -25,11 +26,16 @@ const FormRegister = ({ toggleRegisterDialog }: FormRegisterProps) => {
     });
 
     async function onSubmit(values: z.infer<typeof registerSchema>) {
-        const { success } = await createUser(values);
+        const { success, data } = await createUser(values);
 
-        if (!success) {
+        if (!success || !data) {
             toast.error('Erro ao criar usuário');
         }
+
+        await createUserPostgres({
+            id: data.id,
+            email: data.email,
+        });
 
         form.reset();
         toast.success('Usuário criado com sucesso!');
