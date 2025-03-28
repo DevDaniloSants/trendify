@@ -35,7 +35,7 @@ const ProductItem = (product: ProductItemProps) => {
         toast.success('Produto adicionado ao carrinho');
     };
 
-    const handleAddToFavorite = () => {
+    const handleToggleFavorite = () => {
         if (!user) {
             toast.error(
                 'Você precisa estar logado para adicionar produtos aos favoritos'
@@ -81,7 +81,7 @@ const ProductItem = (product: ProductItemProps) => {
                 <div className="absolute top-3 right-3 flex flex-col gap-2">
                     <Button
                         size="icon"
-                        onClick={handleAddToFavorite}
+                        onClick={handleToggleFavorite}
                         className={`${
                             favorites.some(
                                 (favoriteProduct) =>
