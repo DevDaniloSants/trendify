@@ -8,6 +8,7 @@ import { useFavorite } from '../_hooks/useFavorite';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { useUser } from '../_hooks/useUser';
+import addFavoriteProduct from '../_data-access/favorite/add-favorite-product-postgres';
 
 export interface ProductItemProps {
     id: number;
@@ -21,7 +22,7 @@ export interface ProductItemProps {
 const ProductItem = (product: ProductItemProps) => {
     const { user } = useUser();
     const { addProductToCart } = useCart();
-    const { addFavorite, favorites, removeFavorite } = useFavorite();
+    const { favorites, removeFavorite } = useFavorite();
 
     const handleAddToCart = () => {
         const productCart = {
@@ -35,7 +36,7 @@ const ProductItem = (product: ProductItemProps) => {
         toast.success('Produto adicionado ao carrinho');
     };
 
-    const handleToggleFavorite = () => {
+    const handleToggleFavorite = async () => {
         if (!user) {
             toast.error(
                 'Você precisa estar logado para adicionar produtos aos favoritos'
@@ -56,11 +57,15 @@ const ProductItem = (product: ProductItemProps) => {
             title: product.title,
             price: product.price,
             images: product.images,
+            userId: user.id,
         };
-        toast.success('Produto adicionado aos favoritos');
-        addFavorite(productFavorite);
-    };
 
+        await addFavoriteProduct({
+            userId: user.id,
+            product: productFavorite,
+        });
+        toast.success('Produto adicionado aos favoritos');
+    };
     return (
         <div key={product.id} className="flex h-[400px] w-full flex-col">
             <div className="group bg-border relative w-full flex-1 overflow-hidden">
