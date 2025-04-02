@@ -7,13 +7,13 @@ import getFavoriteProduct from './get-favorite-product-postgres';
 import { revalidatePath } from 'next/cache';
 
 const addFavoriteProduct = async ({ product }: IFavorite) => {
-    const productIsAlreadyOnFavorite = getFavoriteProduct({
+    const productIsAlreadyOnFavorite = await getFavoriteProduct({
         productId: product.id,
     });
 
-    if (!productIsAlreadyOnFavorite) return;
+    if (productIsAlreadyOnFavorite) return productIsAlreadyOnFavorite;
 
-    await db.favorite.create({
+    const newFavorite = await db.favorite.create({
         data: {
             userId: product.userId,
             id: product.id,
@@ -24,6 +24,8 @@ const addFavoriteProduct = async ({ product }: IFavorite) => {
     });
 
     revalidatePath('/', 'layout');
+
+    return newFavorite;
 };
 
 export default addFavoriteProduct;

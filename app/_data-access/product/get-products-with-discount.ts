@@ -13,7 +13,8 @@ export const getProductsWithDiscount = async (): Promise<{
 }> => {
     try {
         const response = await fetch(
-            process.env.API_URL + '/products/?offset=10&limit=10'
+            process.env.API_URL + '/products/?offset=10&limit=10',
+            { next: { revalidate: 86400 } }
         );
 
         if (!response.ok) {

@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, useLayoutEffect, useState } from 'react';
 import getFavoriteProducts from '../_data-access/favorite/get-favorite-products-postgres';
 import { useUser } from '../_hooks/useUser';
 import RemoveFavoriteProductPostgres from '../_actions/favorite/remove-favorite-product-postgres';
@@ -28,7 +28,7 @@ const FavoriteProvider = ({ children }: { children: ReactNode }) => {
 
     const { user } = useUser();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const refreshFavorites = async () => {
             if (!user) {
                 setFavorites([]);

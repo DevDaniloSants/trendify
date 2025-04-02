@@ -7,7 +7,6 @@ import { useCart } from '../_hooks/useCart';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { useUser } from '../_hooks/useUser';
-import getFavoriteProduct from '../_data-access/favorite/get-favorite-product-postgres';
 import { useFavorite } from '../_hooks/useFavorite';
 
 export interface ProductItemProps {
@@ -43,9 +42,9 @@ const ProductItem = (product: ProductItemProps) => {
             );
             return;
         }
-        const productIsAlreadyOnFavorite = await getFavoriteProduct({
-            productId: product.id,
-        });
+        const productIsAlreadyOnFavorite = favorites.some(
+            (favorite) => favorite.id === product.id
+        );
 
         if (productIsAlreadyOnFavorite) {
             removeFavorite(product.id);
