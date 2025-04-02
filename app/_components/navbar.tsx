@@ -127,11 +127,13 @@ const Navbar = () => {
                             className="relative cursor-pointer hover:bg-transparent"
                             variant="ghost"
                         >
-                            <Link href="/products/favorite">
+                            <Link
+                                href={`/products/favorite?userId=${user?.id}`}
+                            >
                                 <Heart />
                             </Link>
                             <span className="bg-destructive absolute right-1 -bottom-1 flex h-4 w-4 items-center justify-center rounded-full text-xs text-white">
-                                {favorites.length}
+                                {user ? favorites.length : 0}
                             </span>
                         </Button>
 
