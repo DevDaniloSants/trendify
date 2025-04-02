@@ -1,4 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
+import getFavoriteProducts from '../_data-access/favorite/get-favorite-products-postgres';
+import { useUser } from '../_hooks/useUser';
+import RemoveFavoriteProductPostgres from '../_actions/favorite/remove-favorite-product-postgres';
+import addFavoriteProduct from '../_data-access/favorite/add-favorite-product-postgres';
 
 interface FavoriteProduct {
     id: number;
@@ -20,29 +24,54 @@ export const FavoriteContext = createContext<IFavoriteContext>({
 });
 
 const FavoriteProvider = ({ children }: { children: ReactNode }) => {
-    const [favorites, setFavorites] = useState<FavoriteProduct[]>(
-        JSON.parse(localStorage.getItem('@favorite') || '[]')
-    );
+    const [favorites, setFavorites] = useState<FavoriteProduct[]>([]);
+
+    const { user } = useUser();
 
     useEffect(() => {
-        localStorage.setItem('@favorite', JSON.stringify(favorites));
-    }, [favorites]);
+        const refreshFavorites = async () => {
+            if (!user) {
+                setFavorites([]);
+                return;
+            }
 
-    const addFavorite = (product: FavoriteProduct) => {
-        const productIsAlreadyOnFavorite = favorites.some(
-            (favoriteProduct) => favoriteProduct.id === product.id
-        );
+            try {
+                const userFavorites = await getFavoriteProducts({
+                    userId: user.id,
+                });
+                setFavorites(userFavorites.products);
+            } catch (error) {
+                console.error('Error loading favorites:', error);
+            }
+        };
 
-        if (productIsAlreadyOnFavorite) return;
+        refreshFavorites();
+    }, [user]);
 
-        setFavorites((prev) => [...prev, product]);
+    const addFavorite = async (product: FavoriteProduct) => {
+        if (!user) return;
+
+        await addFavoriteProduct({
+            product: {
+                id: product.id,
+                title: product.title,
+                price: product.price,
+                images: product.images,
+                userId: user.id,
+            },
+        });
+
+        setFavorites([...favorites, product]);
     };
 
-    const removeFavorite = (productId: number) => {
-        const newFavorite = favorites.filter(
-            (product) => product.id !== productId
+    const removeFavorite = async (productId: number) => {
+        const product = await RemoveFavoriteProductPostgres({
+            productId,
+        });
+
+        setFavorites(
+            favorites.filter((favorite) => favorite.id !== product.id)
         );
-        setFavorites(newFavorite);
     };
 
     return (
@@ -57,5 +86,4 @@ const FavoriteProvider = ({ children }: { children: ReactNode }) => {
         </FavoriteContext.Provider>
     );
 };
-
 export default FavoriteProvider;

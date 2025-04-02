@@ -1,14 +1,17 @@
-'use client';
-
 import Container from '@/app/_components/container';
 import ProductItem from '@/app/_components/product-item';
 import { SectionHeader, SectionTitle } from '@/app/_components/section-header';
-import { useFavorite } from '@/app/_hooks/useFavorite';
+import getFavoriteProducts from '@/app/_data-access/favorite/get-favorite-products-postgres';
 
-const FavoritePage = () => {
-    const { favorites } = useFavorite();
+const FavoritePage = async ({
+    searchParams,
+}: {
+    searchParams: Promise<{ userId: string }>;
+}) => {
+    const resolvedSearchParams = await searchParams;
+    const userId = Number(resolvedSearchParams.userId);
 
-    console.log(favorites);
+    const { products: favorites } = await getFavoriteProducts({ userId });
 
     return (
         <Container className="min-h-screen p-2">

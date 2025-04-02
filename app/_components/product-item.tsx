@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { EyeIcon, Heart } from 'lucide-react';
 import { Button } from './ui/button';
 import { useCart } from '../_hooks/useCart';
-import { useFavorite } from '../_hooks/useFavorite';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { useUser } from '../_hooks/useUser';
-import addFavoriteProduct from '../_data-access/favorite/add-favorite-product-postgres';
+import getFavoriteProduct from '../_data-access/favorite/get-favorite-product-postgres';
+import { useFavorite } from '../_hooks/useFavorite';
 
 export interface ProductItemProps {
     id: number;
@@ -22,7 +22,7 @@ export interface ProductItemProps {
 const ProductItem = (product: ProductItemProps) => {
     const { user } = useUser();
     const { addProductToCart } = useCart();
-    const { favorites, removeFavorite } = useFavorite();
+    const { favorites, addFavorite, removeFavorite } = useFavorite();
 
     const handleAddToCart = () => {
         const productCart = {
@@ -43,9 +43,9 @@ const ProductItem = (product: ProductItemProps) => {
             );
             return;
         }
-        const productIsAlreadyOnFavorite = favorites.some(
-            (favoriteProduct) => favoriteProduct.id === product.id
-        );
+        const productIsAlreadyOnFavorite = await getFavoriteProduct({
+            productId: product.id,
+        });
 
         if (productIsAlreadyOnFavorite) {
             removeFavorite(product.id);
@@ -60,10 +60,7 @@ const ProductItem = (product: ProductItemProps) => {
             userId: user.id,
         };
 
-        await addFavoriteProduct({
-            userId: user.id,
-            product: productFavorite,
-        });
+        addFavorite(productFavorite);
         toast.success('Produto adicionado aos favoritos');
     };
     return (
