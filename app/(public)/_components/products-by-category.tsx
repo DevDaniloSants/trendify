@@ -1,5 +1,3 @@
-'use client';
-
 import ProductItem from '@/app/_components/product-item';
 import { GetProducDTO } from '@/app/_data-access/interfaces/product';
 
