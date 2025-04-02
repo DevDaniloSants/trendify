@@ -1,12 +1,19 @@
 'use server';
 
 import { db } from '@/app/_lib/prisma';
-import { IFavorite } from '../interfaces/favorite';
+import { IFavorite } from '../../_data-access/interfaces/favorite';
 
-import getFavoriteProduct from './get-favorite-product-postgres';
+import getFavoriteProduct from '../../_data-access/favorite/get-favorite-product-postgres';
 import { revalidatePath } from 'next/cache';
+import { getUserPostgres } from '@/app/_data-access/user/get-user-postgres';
 
 const addFavoriteProduct = async ({ product }: IFavorite) => {
+    const userId = product.userId;
+
+    const user = await getUserPostgres({ userId });
+
+    if (!user) return null;
+
     const productIsAlreadyOnFavorite = await getFavoriteProduct({
         productId: product.id,
     });

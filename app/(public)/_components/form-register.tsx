@@ -28,6 +28,8 @@ const FormRegister = ({ toggleRegisterDialog }: FormRegisterProps) => {
     async function onSubmit(values: z.infer<typeof registerSchema>) {
         const { success, data } = await createUser(values);
 
+        console.log({ data });
+
         if (!success || !data) {
             toast.error('Erro ao criar usuário');
         }

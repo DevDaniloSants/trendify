@@ -2,7 +2,7 @@ import { createContext, ReactNode, useLayoutEffect, useState } from 'react';
 import getFavoriteProducts from '../_data-access/favorite/get-favorite-products-postgres';
 import { useUser } from '../_hooks/useUser';
 import RemoveFavoriteProductPostgres from '../_actions/favorite/remove-favorite-product-postgres';
-import addFavoriteProduct from '../_data-access/favorite/add-favorite-product-postgres';
+import addFavoriteProduct from '../_actions/favorite/add-favorite-product-postgres';
 
 interface FavoriteProduct {
     id: number;
