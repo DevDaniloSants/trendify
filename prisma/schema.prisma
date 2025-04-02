@@ -14,11 +14,12 @@ model User {
 }
 
 model Favorite {
-  id     Int
+  id     Int      @id
   user   User     @relation(fields: [userId], references: [id])
-  userId Int      @id
+  userId Int
   title  String
   price  String
   images String[]
-}
 
+  @@unique([userId, id])
+}
