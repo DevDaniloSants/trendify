@@ -17,8 +17,8 @@ export const createStripeCheckout = async ({
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        success_url: `${origin}payment-confirmation?success=true`,
-        cancel_url: `${origin}payment-confirmation?canceled=true`,
+        success_url: `${origin}/payment-confirmation?success=true`,
+        cancel_url: `${origin}/payment-confirmation?success=false`,
         line_items: products.map((product) => ({
             price_data: {
                 currency: 'brl',

@@ -15,9 +15,28 @@ import { Button } from './ui/button';
 import { useCart } from '../_hooks/useCart';
 import CartItem from './cart-item';
 import { formatCurrency } from '../_helpers/formatCurrency';
+import { useUser } from '../_hooks/useUser';
+import { useRouter } from 'next/navigation';
+import { createStripeCheckout } from '../_actions/stripe/create-stripe-checkout';
+import { loadStripe } from '@stripe/stripe-js';
 
 const Cart = () => {
     const { products, total, totalProducts } = useCart();
+    const { user } = useUser();
+    const router = useRouter();
+
+    const handleFinishOrder = async () => {
+        if (!user) return router.push('/sign-in');
+
+        const { sessionId } = await createStripeCheckout({ products });
+
+        const stripe = await loadStripe(
+            process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+        );
+
+        await stripe?.redirectToCheckout({ sessionId });
+    };
+
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -62,7 +81,12 @@ const Cart = () => {
                                     <p>GRÁTIS</p>
                                 </div>
                             </div>
-                            <Button>Checkout</Button>
+                            <Button
+                                onClick={handleFinishOrder}
+                                className="cursor-pointer"
+                            >
+                                Finalizar compra
+                            </Button>
                         </SheetFooter>
                     </>
                 ) : (
