@@ -15,6 +15,7 @@ const RemoveFavoriteProductPostgres = async ({
     });
 
     revalidatePath('/', 'layout');
+    revalidatePath('/products/favorite', 'page');
 
     return product;
 };
