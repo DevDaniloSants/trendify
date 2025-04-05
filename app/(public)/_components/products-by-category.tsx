@@ -8,7 +8,7 @@ interface ProductsByCategoryProps {
 
 const ProductsByCategory = ({ slug, products }: ProductsByCategoryProps) => {
     return (
-        <div className="h-full min-h-dvh w-full">
+        <div className="h-full min-h-full w-full">
             <h1 className="mb-8 text-xl">
                 Produtos da Categoria:
                 <span className="pl-2 font-bold">{slug}</span>

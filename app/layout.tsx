@@ -22,10 +22,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-Br">
-            <body className={`${mulish.className} antialiased`}>
+            <body
+                className={`${mulish.className} flex min-h-screen flex-col antialiased`}
+            >
                 <AppProvider>
                     <Navbar />
-                    <main className="mt-22 flex h-full w-dvw justify-center md:mt-30">
+                    <main className="flex grow justify-center pt-22 md:pt-30">
                         {children}
                     </main>
                     <Footer />

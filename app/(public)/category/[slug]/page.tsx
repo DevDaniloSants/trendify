@@ -18,7 +18,7 @@ const CategoryPage = async ({
     if (!slug) return notFound();
 
     return (
-        <Container className="flex h-dvh flex-col gap-1 p-2 pt-10 sm:gap-10 md:flex-row md:p-0 xl:w-[1440px]">
+        <Container className="flex h-full flex-col gap-1 p-2 pt-10 sm:gap-10 md:flex-row md:p-0 xl:w-[1440px]">
             <div className="h-full w-full md:w-60">
                 <p className="flex cursor-pointer items-center gap-2 text-xl">
                     FILTROS
