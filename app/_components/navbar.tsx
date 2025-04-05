@@ -127,9 +127,7 @@ const Navbar = () => {
                             className="relative cursor-pointer hover:bg-transparent"
                             variant="ghost"
                         >
-                            <Link
-                                href={`/products/favorite?userId=${user?.id}`}
-                            >
+                            <Link href={`/products/favorite`}>
                                 <Heart />
                             </Link>
                             <span className="bg-destructive absolute right-1 -bottom-1 flex h-4 w-4 items-center justify-center rounded-full text-xs text-white">

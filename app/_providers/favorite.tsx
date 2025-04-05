@@ -52,13 +52,8 @@ const FavoriteProvider = ({ children }: { children: ReactNode }) => {
         if (!user) return;
 
         await addFavoriteProduct({
-            product: {
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                images: product.images,
-                userId: user.id,
-            },
+            product,
+            userId: user.id,
         });
 
         setFavorites([...favorites, product]);

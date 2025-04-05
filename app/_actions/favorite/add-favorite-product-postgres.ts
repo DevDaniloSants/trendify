@@ -7,9 +7,13 @@ import getFavoriteProduct from '../../_data-access/favorite/get-favorite-product
 import { revalidatePath } from 'next/cache';
 import { getUserPostgres } from '@/app/_data-access/user/get-user-postgres';
 
-const addFavoriteProduct = async ({ product }: IFavorite) => {
-    const userId = product.userId;
-
+const addFavoriteProduct = async ({
+    product,
+    userId,
+}: {
+    product: IFavorite;
+    userId: number;
+}) => {
     const user = await getUserPostgres({ userId });
 
     if (!user) return null;
@@ -22,7 +26,7 @@ const addFavoriteProduct = async ({ product }: IFavorite) => {
 
     const newFavorite = await db.favorite.create({
         data: {
-            userId: product.userId,
+            userId,
             id: product.id,
             title: product.title,
             images: product.images,
