@@ -1,11 +1,13 @@
 import Container from '@/app/_components/container';
-import { getTopSellingProducts } from '@/app/_data-access/product/get-top-selling-products';
+
 import Image from 'next/image';
 import ProductShowcase from '../_components/product-showcase';
 
-const AboutPage = async () => {
-    const { data: topProducts } = await getTopSellingProducts();
+import { Suspense } from 'react';
+import { ProductCarouselSkeleton } from '@/app/_components/skeletons';
+import TopSellingProductsCarousel from '../_components/top-selling-products-carousel';
 
+const AboutPage = async () => {
     return (
         <Container className="p-2">
             <div className="flex flex-col gap-10 lg:flex-row lg:justify-between">
@@ -54,8 +56,11 @@ const AboutPage = async () => {
                 <ProductShowcase
                     title="Mais Vendidos"
                     description="Nossos melhores produtos"
-                    products={topProducts || []}
-                />
+                >
+                    <Suspense fallback={<ProductCarouselSkeleton />}>
+                        <TopSellingProductsCarousel />
+                    </Suspense>
+                </ProductShowcase>
             </div>
         </Container>
     );
