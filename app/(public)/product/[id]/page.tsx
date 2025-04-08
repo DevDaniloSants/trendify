@@ -6,8 +6,10 @@ import GoBackButton from '@/app/_components/go-back-button';
 import ProductInfo from '../../_components/product-info';
 import { getProduct } from '@/app/_data-access/product/get-product';
 
-import { getProductsWithDiscount } from '@/app/_data-access/product/get-products-with-discount';
 import ProductShowcase from '../../_components/product-showcase';
+import { Suspense } from 'react';
+import { ProductCarouselSkeleton } from '@/app/_components/skeletons';
+import TopSellingProductsCarousel from '../../_components/top-selling-products-carousel';
 
 type ProductPageProps = { id: string };
 
@@ -19,8 +21,6 @@ const ProductDetails = async ({
     const { id } = await params;
 
     const { data: product } = await getProduct(id);
-
-    const { data: productsWithDiscount } = await getProductsWithDiscount();
 
     if (!product) {
         return notFound();
@@ -42,8 +42,11 @@ const ProductDetails = async ({
             <ProductShowcase
                 title="Mais Vendidos"
                 description="Nossos melhores produtos"
-                products={productsWithDiscount || []}
-            />
+            >
+                <Suspense fallback={<ProductCarouselSkeleton />}>
+                    <TopSellingProductsCarousel />
+                </Suspense>
+            </ProductShowcase>
         </Container>
     );
 };

@@ -3,6 +3,8 @@
 import { Button } from '@/app/_components/ui/button';
 import { GetProducDTO } from '@/app/_data-access/interfaces/product';
 import { useCart } from '@/app/_hooks/useCart';
+import { useFavorite } from '@/app/_hooks/useFavorite';
+import { useUser } from '@/app/_hooks/useUser';
 import {
     HeartIcon,
     MinusIcon,
@@ -12,6 +14,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export interface ProductInfo {
     product: GetProducDTO;
@@ -19,7 +22,9 @@ export interface ProductInfo {
 
 const ProductInfo = ({ product }: ProductInfo) => {
     const [quantity, setQuantity] = useState<number>(1);
+    const { user } = useUser();
     const { addProductToCart } = useCart();
+    const { favorites, addFavorite, removeFavorite } = useFavorite();
 
     const handleDecreaseQuantity = () => {
         setQuantity((prev) => (prev === 1 ? prev : prev - 1));
@@ -38,6 +43,34 @@ const ProductInfo = ({ product }: ProductInfo) => {
             quantity,
         };
         addProductToCart(productCart);
+    };
+
+    const handleToggleFavorite = async () => {
+        if (!user) {
+            toast.error(
+                'Você precisa estar logado para adicionar produtos aos favoritos'
+            );
+            return;
+        }
+        const productIsAlreadyOnFavorite = favorites.some(
+            (favorite) => favorite.id === product.id
+        );
+
+        if (productIsAlreadyOnFavorite) {
+            removeFavorite(product.id);
+            toast.success('Produto removido com sucesso');
+            return;
+        }
+        const productFavorite = {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            images: product.images,
+            userId: user.id,
+        };
+
+        addFavorite(productFavorite);
+        toast.success('Produto adicionado aos favoritos');
     };
 
     return (
@@ -106,12 +139,23 @@ const ProductInfo = ({ product }: ProductInfo) => {
                 <div className="flex w-full items-center justify-between gap-2 md:w-auto">
                     <Button
                         variant={'destructive'}
-                        className="h-14 w-2/3 lg:w-auto"
+                        className="h-14 w-2/3 cursor-pointer lg:w-auto"
                         onClick={handleAddToCart}
                     >
                         Adicionar ao Carrinho
                     </Button>
-                    <Button variant="outline" className="h-14 w-14">
+                    <Button
+                        variant="outline"
+                        className={`h-14 w-14 cursor-pointer ${
+                            favorites.some(
+                                (favoriteProduct) =>
+                                    favoriteProduct.id === product.id
+                            )
+                                ? 'bg-destructive hover:bg-destructive/80 text-white hover:text-white'
+                                : 'text-primary bg-white hover:bg-white/80'
+                        }`}
+                        onClick={handleToggleFavorite}
+                    >
                         <HeartIcon size={20} />
                     </Button>
                 </div>
