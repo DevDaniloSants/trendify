@@ -6,6 +6,8 @@ import { ProductCarouselSkeleton } from '@/app/_components/skeletons';
 
 import ProductsWithDiscountCarousel from '../_components/products-with-discount-carousel';
 import TopSellingProductsCarousel from '../_components/top-selling-products-carousel';
+import ProductBanner from '../_components/product-banner';
+import FeaturedProductsGrid from '../_components/featured-products-grid';
 
 const Home = async () => {
     return (
@@ -14,8 +16,8 @@ const Home = async () => {
 
             <div className="relative space-y-6 md:space-y-12">
                 <ProductShowcase
-                    title="Mais Vendidos"
-                    description="Nossos melhores produtos"
+                    title="Promoção"
+                    description="Nossos produtos em promoção!"
                 >
                     <Suspense fallback={<ProductCarouselSkeleton />}>
                         <ProductsWithDiscountCarousel />
@@ -33,8 +35,11 @@ const Home = async () => {
                     </Suspense>
                 </ProductShowcase>
             </div>
+
+            <ProductBanner />
+
+            <FeaturedProductsGrid />
         </Container>
     );
 };
-
 export default Home;
