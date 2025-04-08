@@ -38,3 +38,25 @@ export const ProductCarouselSkeleton = () => {
         </div>
     );
 };
+
+export const ProductsByCategorySkeleton = () => {
+    return (
+        <div className="grid gap-4 overflow-hidden md:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, index) => (
+                <ProductItemSkeleton key={index} />
+            ))}
+        </div>
+    );
+};
+
+export const CategoriesListSkeleton = () => {
+    return (
+        <div className="flex flex-col gap-2">
+            {Array(5)
+                .fill(0)
+                .map((_, i) => (
+                    <Skeleton key={i} className="h-4 w-24" />
+                ))}
+        </div>
+    );
+};

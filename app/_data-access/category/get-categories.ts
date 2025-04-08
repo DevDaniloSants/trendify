@@ -9,7 +9,9 @@ export const getCategories = async (): Promise<{
     data?: Category[];
 }> => {
     try {
-        const response = await fetch(`${process.env.API_URL}/categories`);
+        const response = await fetch(`${process.env.API_URL}/categories`, {
+            next: { revalidate: 86400 },
+        });
 
         if (!response.ok) {
             const errorData = await response.json();
