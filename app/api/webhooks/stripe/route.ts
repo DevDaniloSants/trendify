@@ -12,4 +12,6 @@ export async function POST(req: Request) {
         signature,
         process.env.STRIPE_WEBHOOK_SECRET_KEY!
     );
+
+    return NextResponse.json({ received: true });
 }
