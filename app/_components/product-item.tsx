@@ -20,10 +20,14 @@ export interface ProductItemProps {
 
 const ProductItem = (product: ProductItemProps) => {
     const { user } = useUser();
-    const { addProductToCart } = useCart();
+    const { addProductToCart, products } = useCart();
     const { favorites, addFavorite, removeFavorite } = useFavorite();
 
     const handleAddToCart = () => {
+        const productIsAlreadyOnCart = products.some(
+            (productCart) => productCart.id === product.id
+        );
+
         const productCart = {
             id: product.id,
             title: product.title,
@@ -32,7 +36,12 @@ const ProductItem = (product: ProductItemProps) => {
             quantity: 1,
         };
         addProductToCart(productCart);
-        toast.success('Produto adicionado ao carrinho');
+
+        if (!productIsAlreadyOnCart) {
+            toast.success('Produto adicionado ao carrinho');
+        } else {
+            toast.success('Produto atualizado no carrinho');
+        }
     };
 
     const handleToggleFavorite = async () => {

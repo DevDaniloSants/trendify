@@ -23,7 +23,7 @@ export interface ProductInfo {
 const ProductInfo = ({ product }: ProductInfo) => {
     const [quantity, setQuantity] = useState<number>(1);
     const { user } = useUser();
-    const { addProductToCart } = useCart();
+    const { addProductToCart, products } = useCart();
     const { favorites, addFavorite, removeFavorite } = useFavorite();
 
     const handleDecreaseQuantity = () => {
@@ -35,14 +35,24 @@ const ProductInfo = ({ product }: ProductInfo) => {
     };
 
     const handleAddToCart = () => {
+        const productIsAlreadyOnCart = products.some(
+            (productCart) => productCart.id === product.id
+        );
+
         const productCart = {
             id: product.id,
             title: product.title,
             price: product.price,
             image: product.images[0],
-            quantity,
+            quantity: 1,
         };
         addProductToCart(productCart);
+
+        if (!productIsAlreadyOnCart) {
+            toast.success('Produto adicionado ao carrinho');
+        } else {
+            toast.success('Produto atualizado no carrinho');
+        }
     };
 
     const handleToggleFavorite = async () => {
